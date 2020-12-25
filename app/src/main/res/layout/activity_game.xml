@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/background"
+    tools:context=".GameActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/firstBoard"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:rotationX="60"
+        app:layout_constraintBottom_toTopOf="@+id/secondBoard"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed">
+
+        <Button
+            android:id="@+id/button000"
+            style="@style/game_button_style"
+            android:text=" "
+            app:layout_constraintEnd_toStartOf="@+id/button001"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/button001"
+            style="@style/game_button_style"
+            android:text=" "
+            app:layout_constraintEnd_toStartOf="@+id/button002"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/button000"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/button002"
+            style="@style/game_button_style"
+            android:text=" "
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/button001"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/button010"
+            style="@style/game_button_style"
+            android:text=" "
+            app:layout_constraintEnd_toStartOf="@+id/button011"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/button000" />
+
+        <Button
+            android:id="@+id/button011"
+            style="@style/game_button_style"
+            android:text=" "
+            app:layout_constraintEnd_toStartOf="@+id/button012"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/button010"
+            app:layout_constraintTop_toBottomOf="@id/button001" />
+
+        <Button
+            android:id="@+id/button012"
+            style="@style/game_button_style"
+            android:text=" "
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/button011"
+            app:layout_constraintTop_toBottomOf="@id/button002" />
+
+        <Button
+            android:id="@+id/button020"
+            style="@style/game_button_style"
+            android:text=" "
+            app:layout_constraintEnd_toStartOf="@+id/button021"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/button010" />
+
+        <Button
+            android:id="@+id/button021"
+            style="@style/game_button_style"
+            android:text=" "
+            app:layout_constraintEnd_toStartOf="@+id/button022"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/button020"
+            app:layout_constraintTop_toBottomOf="@id/button011" />
+
+        <Button
+
+            android:id="@+id/button022"
+            style="@style/game_button_style"
+            android:text=" "
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/button021"
+            app:layout_constraintTop_toBottomOf="@id/button012" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/secondBoard"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:rotationX="60"
+        app:layout_constraintBottom_toTopOf="@+id/thirdBoard"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/firstBoard">
+
+        <Button
+            android:id="@+id/button100"
+            style="@style/game_button_style"
+            android:text=" "
+            app:layout_constraintEnd_toStartOf="@+id/button101"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/button101"
+            style="@style/game_button_style"
+            android:text=" "
+            app:layout_constraintEnd_toStartOf="@+id/button102"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/button100"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/button102"
+            style="@style/game_button_style"
+            android:text=" "
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/button101"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/button110"
+            style="@style/game_button_style"
+            android:text=" "
+            app:layout_constraintEnd_toStartOf="@+id/button111"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/button100" />
+
+        <Button
+            android:id="@+id/button111"
+            style="@style/game_button_style"
+            android:text=" "
+            app:layout_constraintEnd_toStartOf="@+id/button112"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/button110"
+            app:layout_constraintTop_toBottomOf="@id/button101" />
+
+        <Button
+            android:id="@+id/button112"
+            style="@style/game_button_style"
+            android:text=" "
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/button111"
+            app:layout_constraintTop_toBottomOf="@id/button102" />
+
+        <Button
+            android:id="@+id/button120"
+            style="@style/game_button_style"
+            android:text=" "
+            app:layout_constraintEnd_toStartOf="@+id/button121"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/button110" />
+
+        <Button
+            android:id="@+id/button121"
+            style="@style/game_button_style"
+            android:text=" "
+            app:layout_constraintEnd_toStartOf="@+id/button122"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/button120"
+            app:layout_constraintTop_toBottomOf="@id/button111" />
+
+        <Button
+
+            android:id="@+id/button122"
+            style="@style/game_button_style"
+            android:text=" "
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/button121"
+            app:layout_constraintTop_toBottomOf="@id/button112" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/thirdBoard"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:rotationX="60"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/secondBoard">
+
+        <Button
+            android:id="@+id/button200"
+            style="@style/game_button_style"
+            android:text=" "
+            app:layout_constraintEnd_toStartOf="@+id/button201"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/button201"
+            style="@style/game_button_style"
+            android:text=" "
+            app:layout_constraintEnd_toStartOf="@+id/button202"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/button200"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/button202"
+            style="@style/game_button_style"
+            android:text=" "
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/button201"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/button210"
+            style="@style/game_button_style"
+            android:text=" "
+            app:layout_constraintEnd_toStartOf="@+id/button211"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/button200" />
+
+        <Button
+            android:id="@+id/button211"
+            style="@style/game_button_style"
+            android:text=" "
+            app:layout_constraintEnd_toStartOf="@+id/button212"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/button210"
+            app:layout_constraintTop_toBottomOf="@id/button201" />
+
+        <Button
+            android:id="@+id/button212"
+            style="@style/game_button_style"
+            android:text=" "
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/button211"
+            app:layout_constraintTop_toBottomOf="@id/button202" />
+
+        <Button
+            android:id="@+id/button220"
+            style="@style/game_button_style"
+            android:text=" "
+            app:layout_constraintEnd_toStartOf="@+id/button221"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/button210" />
+
+        <Button
+            android:id="@+id/button221"
+            style="@style/game_button_style"
+            android:text=" "
+            app:layout_constraintEnd_toStartOf="@+id/button222"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/button220"
+            app:layout_constraintTop_toBottomOf="@id/button211" />
+
+        <Button
+
+            android:id="@+id/button222"
+            style="@style/game_button_style"
+            android:text=" "
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/button221"
+            app:layout_constraintTop_toBottomOf="@id/button212" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
