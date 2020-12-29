@@ -10,11 +10,15 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.LinearLayout
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 import kotlinx.android.synthetic.main.fragment_game.*
 import kotlin.math.roundToInt
 
-
 class GameFragment : Fragment() {
+    private val TAG = "GameFragment"
+
+    private val viewModel: UsersViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -28,6 +32,10 @@ class GameFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        viewModel.users.observe(viewLifecycleOwner, Observer {
+            Log.d(TAG, it.toString())
+        })
 
         val size = 3
         val buttonSize = (if (size == 4) 48f else 64f).dpToPixels().roundToInt()
