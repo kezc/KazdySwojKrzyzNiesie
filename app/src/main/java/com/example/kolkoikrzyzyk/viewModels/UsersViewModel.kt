@@ -1,4 +1,4 @@
-package com.example.kolkoikrzyzyk
+package com.example.kolkoikrzyzyk.viewModels
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

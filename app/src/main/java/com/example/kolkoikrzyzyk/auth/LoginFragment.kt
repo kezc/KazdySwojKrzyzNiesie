@@ -1,4 +1,4 @@
-package com.example.kolkoikrzyzyk
+package com.example.kolkoikrzyzyk.auth
 
 import android.os.Bundle
 import android.util.Log
@@ -7,7 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Observer
+import com.example.kolkoikrzyzyk.R
+import com.example.kolkoikrzyzyk.game.Game3DFragment
+import com.example.kolkoikrzyzyk.viewModels.UsersViewModel
 import kotlinx.android.synthetic.main.login_fragment.*
 
 
@@ -28,12 +30,12 @@ class LoginFragment : Fragment() {
         confirmButton.setOnClickListener {
             viewModel.addUser(nameEditText.text.toString())
             val transaction = requireActivity().supportFragmentManager.beginTransaction()
-            transaction.replace(R.id.fragment, GameFragment(), "tag")
+            transaction.replace(R.id.fragment, Game3DFragment(), "tag")
             transaction.disallowAddToBackStack()
             transaction.commit()
         }
 
-        viewModel.users.observe(viewLifecycleOwner, Observer {
+        viewModel.users.observe(viewLifecycleOwner, {
             Log.d(TAG, it.toString())
         })
     }
