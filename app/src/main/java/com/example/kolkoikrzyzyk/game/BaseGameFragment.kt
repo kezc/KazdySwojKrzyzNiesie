@@ -9,17 +9,23 @@ import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import com.example.kolkoikrzyzyk.R
-import com.example.kolkoikrzyzyk.UsersViewModel
+import com.example.kolkoikrzyzyk.model.game.FieldType
+import com.example.kolkoikrzyzyk.viewModels.GameViewModel
+import com.example.kolkoikrzyzyk.viewModels.UsersViewModel
 
 
 open class BaseGameFragment : Fragment() {
 
-    protected val viewModel: UsersViewModel by activityViewModels()
+    protected val usersViewModel: UsersViewModel by activityViewModels()
+    protected val gameViewModel: GameViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         (activity as AppCompatActivity?)!!.supportActionBar!!.hide()
     }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -47,4 +53,16 @@ open class BaseGameFragment : Fragment() {
                 id = View.generateViewId()
             }
 
+    protected fun setButtonImage(
+        button: ImageButton,
+        field: FieldType
+    ) {
+        button.setImageResource(
+            when (field) {
+                FieldType.Cross -> R.drawable.cross
+                FieldType.Nought -> R.drawable.nought
+                FieldType.Empty -> R.drawable.ic_launcher_background
+            }
+        )
+    }
 }

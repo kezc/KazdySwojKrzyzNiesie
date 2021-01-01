@@ -1,4 +1,4 @@
-package com.example.kolkoikrzyzyk.model
+package com.example.kolkoikrzyzyk.model.game
 
 enum class FieldType(val value: Int) {
     Nought(-1),

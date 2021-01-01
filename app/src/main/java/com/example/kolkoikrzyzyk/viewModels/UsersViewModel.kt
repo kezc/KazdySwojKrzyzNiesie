@@ -3,6 +3,7 @@ package com.example.kolkoikrzyzyk.viewModels
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.kolkoikrzyzyk.notifyObserver
 
 class UsersViewModel : ViewModel() {
     private val _users = MutableLiveData<MutableList<String>>(mutableListOf())
@@ -16,6 +17,3 @@ class UsersViewModel : ViewModel() {
 
 }
 
-private fun <T> MutableLiveData<T>.notifyObserver() {
-    this.value = this.value
-}

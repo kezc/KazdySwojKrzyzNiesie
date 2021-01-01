@@ -21,7 +21,7 @@ class Game3DFragment : BaseGameFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.users.observe(viewLifecycleOwner, {
+        usersViewModel.users.observe(viewLifecycleOwner, {
             Log.d(TAG, it.toString())
         })
 

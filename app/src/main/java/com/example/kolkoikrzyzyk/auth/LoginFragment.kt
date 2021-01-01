@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.example.kolkoikrzyzyk.R
+import com.example.kolkoikrzyzyk.game.Game2DFragment
 import com.example.kolkoikrzyzyk.game.Game3DFragment
 import com.example.kolkoikrzyzyk.viewModels.UsersViewModel
 import kotlinx.android.synthetic.main.login_fragment.*
@@ -30,7 +31,7 @@ class LoginFragment : Fragment() {
         confirmButton.setOnClickListener {
             viewModel.addUser(nameEditText.text.toString())
             val transaction = requireActivity().supportFragmentManager.beginTransaction()
-            transaction.replace(R.id.fragment, Game3DFragment(), "tag")
+            transaction.replace(R.id.fragment, Game2DFragment(), "tag")
             transaction.disallowAddToBackStack()
             transaction.commit()
         }
