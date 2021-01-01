@@ -31,7 +31,7 @@ class LoginFragment : Fragment() {
         confirmButton.setOnClickListener {
             viewModel.addUser(nameEditText.text.toString())
             val transaction = requireActivity().supportFragmentManager.beginTransaction()
-            transaction.replace(R.id.fragment, Game2DFragment(), "tag")
+            transaction.replace(R.id.fragment, Game3DFragment(), "tag")
             transaction.disallowAddToBackStack()
             transaction.commit()
         }

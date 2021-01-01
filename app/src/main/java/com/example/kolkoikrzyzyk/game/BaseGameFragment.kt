@@ -6,17 +6,19 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import com.example.kolkoikrzyzyk.R
 import com.example.kolkoikrzyzyk.model.game.FieldType
+import com.example.kolkoikrzyzyk.model.game.GameResult
 import com.example.kolkoikrzyzyk.viewModels.GameViewModel
 import com.example.kolkoikrzyzyk.viewModels.UsersViewModel
 
 
-open class BaseGameFragment : Fragment() {
+abstract class BaseGameFragment : Fragment() {
 
     protected val usersViewModel: UsersViewModel by activityViewModels()
     protected val gameViewModel: GameViewModel by viewModels()
@@ -33,6 +35,22 @@ open class BaseGameFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_game, container, false)
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        gameViewModel.gameResult.observe(viewLifecycleOwner, { result ->
+            when (result) {
+                is GameResult.Over -> onWin(result)
+                GameResult.Draw -> onDraw()
+                GameResult.Pending, null -> {
+                }
+            }
+        })
+    }
+
+    protected abstract fun onDraw()
+
+    protected abstract fun onWin(result: GameResult.Over)
+
     protected fun linearLayoutContainer(layoutOrientation: Int): LinearLayout {
         return LinearLayout(requireContext()).apply {
             layoutParams = LinearLayout.LayoutParams(
@@ -43,7 +61,7 @@ open class BaseGameFragment : Fragment() {
         }
     }
 
-    protected fun emptyButton(buttonSize: Int): ImageButton =
+    protected fun emptyButton(buttonSize: Int, x: Int, y: Int, z: Int): ImageButton =
         ImageButton(
             requireContext()
         )
@@ -51,6 +69,9 @@ open class BaseGameFragment : Fragment() {
                 setImageResource(R.drawable.ic_launcher_foreground)
                 layoutParams = LinearLayout.LayoutParams(buttonSize, buttonSize)
                 id = View.generateViewId()
+                setOnClickListener {
+                    gameViewModel.makeMove(x, y, z)
+                }
             }
 
     protected fun setButtonImage(

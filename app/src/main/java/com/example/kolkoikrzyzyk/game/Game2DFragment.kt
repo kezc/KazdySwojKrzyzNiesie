@@ -35,24 +35,16 @@ class Game2DFragment : BaseGameFragment() {
             }
         })
 
-        gameViewModel.gameResult.observe(viewLifecycleOwner, { result ->
-            when (result) {
-                is GameResult.Over -> onWin(result)
-                GameResult.Draw -> onDraw()
-                GameResult.Pending, null -> {
-                }
-            }
-        })
         gameViewModel.startGame()
     }
 
-    private fun onDraw() {
+    override fun onDraw() {
         Toast.makeText(requireContext(), "REMIS", Toast.LENGTH_LONG)
             .show()
         buttons.forEach { it.forEach { button -> button.isClickable = false } }
     }
 
-    private fun onWin(result: GameResult.Over) {
+    override fun onWin(result: GameResult.Over) {
         Toast.makeText(
             requireContext(),
             "WYGRAL ${result.winner}",
@@ -71,10 +63,7 @@ class Game2DFragment : BaseGameFragment() {
             val list = mutableListOf<ImageButton>()
             tempButtons.add(list)
             for (x in 0 until size) {
-                val button = emptyButton(buttonSize)
-                button.setOnClickListener {
-                    gameViewModel.makeMove(x, y, 0)
-                }
+                val button = emptyButton(buttonSize, x, y, 0)
                 list.add(button)
                 row.addView(button)
             }

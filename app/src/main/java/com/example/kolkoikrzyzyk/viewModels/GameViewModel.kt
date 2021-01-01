@@ -11,8 +11,8 @@ import com.example.kolkoikrzyzyk.notifyObserver
 class GameViewModel : ViewModel() {
     private var isGameWithComputer = false
     private var players = listOf("wojtek")
-    private var size = 4
-    private var is3D = false
+    var size = 3
+    var is3D = true
     private lateinit var game: Game
     private val _boardState = MutableLiveData<Array<Array<Array<FieldType>>>?>()
     val boardState: LiveData<Array<Array<Array<FieldType>>>?>

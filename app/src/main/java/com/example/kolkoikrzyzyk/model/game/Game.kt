@@ -1,7 +1,5 @@
 package com.example.kolkoikrzyzyk.model.game
 
-import androidx.annotation.VisibleForTesting
-
 class Game(val size: Int, val is3D: Boolean) {
     var currentPlayer = PlayerType.Nought
         private set
@@ -135,12 +133,12 @@ class Game(val size: Int, val is3D: Boolean) {
 
     fun check3DColumnsForWin(): GameResult? {
         if (!is3D) return null
-        TODO("Implement")
+        TODO("Not yet implemented")
     }
 
     fun checkWallDiagonalsForWin(): GameResult? {
         if (!is3D) return null
-        TODO("Implement")
+        TODO("Not yet implemented")
     }
 
 }

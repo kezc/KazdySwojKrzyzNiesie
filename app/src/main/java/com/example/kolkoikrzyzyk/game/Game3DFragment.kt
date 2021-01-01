@@ -6,15 +6,18 @@ import android.view.MotionEvent
 import android.view.View
 import android.widget.ImageButton
 import android.widget.LinearLayout
+import android.widget.Toast
 import com.example.kolkoikrzyzyk.R
 import com.example.kolkoikrzyzyk.dpToPixels
+import com.example.kolkoikrzyzyk.model.game.FieldType
+import com.example.kolkoikrzyzyk.model.game.GameResult
 import kotlinx.android.synthetic.main.fragment_game.*
 import kotlin.math.roundToInt
 
 class Game3DFragment : BaseGameFragment() {
     private val TAG = "Game3DFragment"
 
-    private val buttons = mutableListOf<List<ImageButton>>() // add one more dimension
+    private lateinit var buttons: MutableList<List<List<ImageButton>>>
     private val boards = mutableListOf<LinearLayout>()
 
 
@@ -25,23 +28,41 @@ class Game3DFragment : BaseGameFragment() {
             Log.d(TAG, it.toString())
         })
 
-        val size = 4
+        createBoard(gameViewModel.size)
+
+        gameViewModel.boardState.observe(viewLifecycleOwner, {
+            it?.let {
+                it.forEachIndexed { z, board ->
+                    board.forEachIndexed { y, row ->
+                        row.forEachIndexed { x, field ->
+                            val button = buttons[z][y][x]
+                            button.isClickable = field == FieldType.Empty
+                            setButtonImage(button, field)
+                        }
+                    }
+                }
+            }
+        })
+
+        gameViewModel.startGame()
+    }
+
+    private fun createBoard(size: Int) {
         val buttonSize = (if (size == 4) 36f else 64f).dpToPixels(resources).roundToInt()
-        Log.d(TAG, "button size: $buttonSize")
+        val tempButtons = mutableListOf<List<List<ImageButton>>>()
 
-
-        for (i in 0 until size) {
+        for (z in 0 until size) {
             val column = linearLayoutContainer(LinearLayout.VERTICAL).apply {
                 rotationX = 60f
             }
-            for (j in 0 until size) {
+            val buttonBoard = mutableListOf<List<ImageButton>>()
+            tempButtons.add(buttonBoard)
+            for (y in 0 until size) {
                 val row = linearLayoutContainer(LinearLayout.HORIZONTAL)
                 val list = mutableListOf<ImageButton>()
-                buttons.add(list)
-                for (k in 0 until size) {
-                    val button = emptyButton(buttonSize).apply {
-                        setImageResource(if (k%2 == 0) R.drawable.nought else R.drawable.cross)
-                    }
+                buttonBoard.add(list)
+                for (x in 0 until size) {
+                    val button = emptyButton(buttonSize, x, y, z)
                     list.add(button)
                     row.addView(button)
                 }
@@ -50,7 +71,33 @@ class Game3DFragment : BaseGameFragment() {
             gameContainer.addView(column)
             boards.add(column)
         }
+        buttons = tempButtons
         setRotation()
+    }
+
+    override fun onDraw() {
+        Toast.makeText(requireContext(), "REMIS", Toast.LENGTH_LONG)
+            .show()
+        buttons.forEach { board ->
+            board.forEach { row ->
+                row.forEach { button ->
+                    button.isClickable = false
+                }
+            }
+        }
+    }
+
+    override fun onWin(result: GameResult.Over) {
+        Toast.makeText(
+            requireContext(),
+            "WYGRAL ${result.winner}",
+            Toast.LENGTH_LONG
+        ).show()
+        buttons.forEach { board ->
+            board.forEach { row ->
+                row.forEach { button -> button.isClickable = false }
+            }
+        }
     }
 
 
