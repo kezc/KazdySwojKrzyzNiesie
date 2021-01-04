@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/wooden_background_repeat"
-    tools:context=".game.Game3DFragment">
+    tools:context=".Game3DFragment">
 
     <TextView
         android:id="@+id/textView2"

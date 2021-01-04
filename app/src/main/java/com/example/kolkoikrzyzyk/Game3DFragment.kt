@@ -1,4 +1,4 @@
-package com.example.kolkoikrzyzyk.game
+package com.example.kolkoikrzyzyk
 
 import android.os.Bundle
 import android.util.Log
@@ -7,8 +7,6 @@ import android.view.View
 import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.Toast
-import com.example.kolkoikrzyzyk.R
-import com.example.kolkoikrzyzyk.dpToPixels
 import com.example.kolkoikrzyzyk.model.game.FieldType
 import com.example.kolkoikrzyzyk.model.game.GameResult
 import kotlinx.android.synthetic.main.fragment_game.*

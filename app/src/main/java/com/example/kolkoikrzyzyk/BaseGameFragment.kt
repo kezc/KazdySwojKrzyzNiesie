@@ -1,4 +1,4 @@
-package com.example.kolkoikrzyzyk.game
+package com.example.kolkoikrzyzyk
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,12 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.LinearLayout
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import com.example.kolkoikrzyzyk.R
 import com.example.kolkoikrzyzyk.model.game.FieldType
 import com.example.kolkoikrzyzyk.model.game.GameResult
 import com.example.kolkoikrzyzyk.viewModels.GameViewModel

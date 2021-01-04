@@ -1,13 +1,10 @@
-package com.example.kolkoikrzyzyk.game
+package com.example.kolkoikrzyzyk
 
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.Toast
-import androidx.lifecycle.Observer
-import com.example.kolkoikrzyzyk.R
-import com.example.kolkoikrzyzyk.dpToPixels
 import com.example.kolkoikrzyzyk.model.game.FieldType
 import com.example.kolkoikrzyzyk.model.game.GameResult
 import kotlinx.android.synthetic.main.fragment_game.*
@@ -20,7 +17,7 @@ class Game2DFragment : BaseGameFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val size = 4
+        val size = 3
 
         createBoard(size)
         gameViewModel.boardState.observe(viewLifecycleOwner, {
