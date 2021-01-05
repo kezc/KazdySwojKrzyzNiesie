@@ -8,17 +8,15 @@ import android.widget.ImageButton
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import com.example.kolkoikrzyzyk.model.game.FieldType
 import com.example.kolkoikrzyzyk.model.game.GameResult
 import com.example.kolkoikrzyzyk.viewModels.GameViewModel
-import com.example.kolkoikrzyzyk.viewModels.UsersViewModel
 
 
 abstract class BaseGameFragment : Fragment() {
 
-    protected val usersViewModel: UsersViewModel by activityViewModels()
+    //    protected val usersViewModel: UsersViewModel by activityViewModels()
     protected val gameViewModel: GameViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -64,12 +62,15 @@ abstract class BaseGameFragment : Fragment() {
             requireContext()
         )
             .apply {
-                setImageResource(R.drawable.ic_launcher_foreground)
-                layoutParams = LinearLayout.LayoutParams(buttonSize, buttonSize)
+                layoutParams = LinearLayout.LayoutParams(buttonSize, buttonSize).apply {
+                    setMargins(0, 0, 0, 0)
+                }
+                setPadding(0, 0, 0, 0)
                 id = View.generateViewId()
                 setOnClickListener {
                     gameViewModel.makeMove(x, y, z)
                 }
+
             }
 
     protected fun setButtonImage(
@@ -80,7 +81,7 @@ abstract class BaseGameFragment : Fragment() {
             when (field) {
                 FieldType.Cross -> R.drawable.cross
                 FieldType.Nought -> R.drawable.nought
-                FieldType.Empty -> R.drawable.ic_launcher_background
+                FieldType.Empty -> R.drawable.border
             }
         )
     }

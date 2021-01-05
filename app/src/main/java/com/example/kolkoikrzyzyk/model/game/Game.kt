@@ -1,24 +1,33 @@
 package com.example.kolkoikrzyzyk.model.game
 
+import android.util.Log
+
 class Game(val size: Int, val is3D: Boolean) {
+    private val TAG = "Game"
     var currentPlayer = PlayerType.Nought
         private set
     var moveCount = 0
         private set
     val height = if (is3D) size else 1
-    val gameBoard = Array(height) {
-        Array(size) {
-            Array(size) {
-                FieldType.Empty
+    val gameBoards = Array(height) { z ->
+        Array(size) { y ->
+            Array(size) { x ->
+                Field(x, y, z)
             }
         }
     }
+    var hasEnded = false
+        private set
 
     // returns true if the move was correct
     // false otherwise
     fun makeMove(x: Int, y: Int, z: Int): Boolean {
-        if (gameBoard[z][y][x] != FieldType.Empty) return false
-        gameBoard[z][y][x] = getCurrentPlayerField()
+        if (gameBoards[z][y][x].type != FieldType.Empty || hasEnded) return false
+        when (currentPlayer) {
+            PlayerType.Nought -> gameBoards[z][y][x].placeNought()
+            PlayerType.Cross -> gameBoards[z][y][x].placeCross()
+        }
+        moveCount++
         changeCurrentPlayer()
         return true
     }
@@ -30,19 +39,27 @@ class Game(val size: Int, val is3D: Boolean) {
         }
     }
 
-    private fun getCurrentPlayerField() = when (currentPlayer) {
-        PlayerType.Nought -> FieldType.Nought
-        PlayerType.Cross -> FieldType.Cross
-    }
+
+    fun getAvailableFields(): List<Field> = gameBoards
+        .map { singleBoard ->
+            singleBoard.map { row ->
+                row.filter { it.type == FieldType.Empty }
+            }.flatten()
+        }.flatten()
+
 
     // returns the winner if the game has ended
     // otherwise returns null
     fun checkForWin(): GameResult {
         if (moveCount == size * size * height) return GameResult.Draw
-        return checkRowsForWin()
+        val winResult = checkRowsForWin()
             ?: checkColumnsForWin()
             ?: check2DDiagonalsForWin()
-            ?: GameResult.Pending
+            ?: check3DColumnsForWin()
+        winResult?.let {
+            hasEnded = true
+        }
+        return winResult ?: GameResult.Pending
     }
 
     // returns null if can't decide about the result
@@ -51,7 +68,7 @@ class Game(val size: Int, val is3D: Boolean) {
             for (x in 0 until size) {
                 var sum = 0
                 for (y in 0 until size) {
-                    sum += gameBoard[z][y][x].value
+                    sum += gameBoards[z][y][x].value
                 }
                 if (sum == size) {
                     return GameResult.Over(PlayerType.Cross)
@@ -65,7 +82,7 @@ class Game(val size: Int, val is3D: Boolean) {
 
     // returns null if can't decide about the result
     fun checkRowsForWin(): GameResult? {
-        for (board in gameBoard) {
+        for (board in gameBoards) {
             for (row in board) {
                 val sum = row.sumBy {
                     it.value
@@ -85,7 +102,7 @@ class Game(val size: Int, val is3D: Boolean) {
         for (z in 0 until height) {
             var sum = 0
             for (i in 0 until size) {
-                sum += gameBoard[z][i][i].value
+                sum += gameBoards[z][i][i].value
             }
             if (sum == size) {
                 return GameResult.Over(PlayerType.Cross)
@@ -95,7 +112,7 @@ class Game(val size: Int, val is3D: Boolean) {
 
             sum = 0
             for (i in 0 until size) {
-                sum += gameBoard[z][i][size - i - 1].value
+                sum += gameBoards[z][i][size - i - 1].value
             }
             if (sum == size) {
                 return GameResult.Over(PlayerType.Cross)
@@ -111,7 +128,7 @@ class Game(val size: Int, val is3D: Boolean) {
 
         var sum = 0
         for (i in 0 until size) {
-            sum += gameBoard[i][i][i].value
+            sum += gameBoards[i][i][i].value
         }
         if (sum == size) {
             return GameResult.Over(PlayerType.Cross)
@@ -121,7 +138,7 @@ class Game(val size: Int, val is3D: Boolean) {
 
         sum = 0
         for (i in 0 until size) {
-            sum += gameBoard[i][size - i - 1][size - i - 1].value
+            sum += gameBoards[i][size - i - 1][size - i - 1].value
         }
         if (sum == size) {
             return GameResult.Over(PlayerType.Cross)
@@ -133,7 +150,20 @@ class Game(val size: Int, val is3D: Boolean) {
 
     fun check3DColumnsForWin(): GameResult? {
         if (!is3D) return null
-        TODO("Not yet implemented")
+        for (x in 0 until size) {
+            for (y in 0 until size) {
+                var sum = 0
+                for (z in 0 until height) {
+                    sum += gameBoards[z][y][x].value
+                }
+                if (sum == size) {
+                    return GameResult.Over(PlayerType.Cross)
+                } else if (sum == -size) {
+                    return GameResult.Over(PlayerType.Nought)
+                }
+            }
+        }
+        return null
     }
 
     fun checkWallDiagonalsForWin(): GameResult? {
@@ -141,5 +171,11 @@ class Game(val size: Int, val is3D: Boolean) {
         TODO("Not yet implemented")
     }
 
+    internal fun clearField(x: Int, y: Int, z: Int) {
+        gameBoards[z][y][x].placeEmpty()
+        moveCount--
+        currentPlayer = currentPlayer.getOther()
+        hasEnded = false
+    }
 }
 

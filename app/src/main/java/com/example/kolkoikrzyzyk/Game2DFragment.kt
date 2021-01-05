@@ -1,6 +1,7 @@
 package com.example.kolkoikrzyzyk
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.ImageButton
 import android.widget.LinearLayout
@@ -11,13 +12,14 @@ import kotlinx.android.synthetic.main.fragment_game.*
 import kotlin.math.roundToInt
 
 class Game2DFragment : BaseGameFragment() {
+    private val TAG = "Game2DFragment"
 
     private lateinit var buttons: List<List<ImageButton>>
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val size = 3
+        val size = gameViewModel.size
 
         createBoard(size)
         gameViewModel.boardState.observe(viewLifecycleOwner, {
@@ -25,12 +27,17 @@ class Game2DFragment : BaseGameFragment() {
                 it[0].forEachIndexed { y, row ->
                     row.forEachIndexed { x, field ->
                         val button = buttons[y][x]
-                        button.isClickable = field == FieldType.Empty
-                        setButtonImage(button, field)
+                        button.isClickable = field.type == FieldType.Empty
+                        setButtonImage(button, field.type)
                     }
                 }
             }
         })
+
+        gameViewModel.computerThinking.observe(viewLifecycleOwner) {
+            if (it) disableButtons()
+            else enableButtons()
+        }
 
         gameViewModel.startGame()
     }
@@ -38,7 +45,7 @@ class Game2DFragment : BaseGameFragment() {
     override fun onDraw() {
         Toast.makeText(requireContext(), "REMIS", Toast.LENGTH_LONG)
             .show()
-        buttons.forEach { it.forEach { button -> button.isClickable = false } }
+        disableButtons()
     }
 
     override fun onWin(result: GameResult.Over) {
@@ -47,7 +54,15 @@ class Game2DFragment : BaseGameFragment() {
             "WYGRAL ${result.winner}",
             Toast.LENGTH_LONG
         ).show()
+        disableButtons()
+    }
+
+    private fun disableButtons() {
         buttons.forEach { it.forEach { button -> button.isClickable = false } }
+    }
+
+    private fun enableButtons() {
+        buttons.forEach { it.forEach { button -> button.isClickable = true } }
     }
 
     private fun createBoard(size: Int) {

@@ -22,9 +22,9 @@ class Game3DFragment : BaseGameFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        usersViewModel.users.observe(viewLifecycleOwner, {
-            Log.d(TAG, it.toString())
-        })
+//        usersViewModel.users.observe(viewLifecycleOwner, {
+//            Log.d(TAG, it.toString())
+//        })
 
         createBoard(gameViewModel.size)
 
@@ -34,8 +34,8 @@ class Game3DFragment : BaseGameFragment() {
                     board.forEachIndexed { y, row ->
                         row.forEachIndexed { x, field ->
                             val button = buttons[z][y][x]
-                            button.isClickable = field == FieldType.Empty
-                            setButtonImage(button, field)
+                            button.isClickable = field.type == FieldType.Empty
+                            setButtonImage(button, field.type)
                         }
                     }
                 }
