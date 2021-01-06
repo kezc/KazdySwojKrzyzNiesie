@@ -51,13 +51,14 @@ class Game(val size: Int, val is3D: Boolean) {
     // returns the winner if the game has ended
     // otherwise returns null
     fun checkForWin(): GameResult {
-        if (moveCount == size * size * height) return GameResult.Draw
         val winResult = checkRowsForWin()
             ?: checkColumnsForWin()
             ?: check2DDiagonalsForWin()
             ?: check3DColumnsForWin()
-        winResult?.let {
+        if (winResult != null) {
             hasEnded = true
+        } else if (moveCount == size * size * height) {
+            return GameResult.Draw
         }
         return winResult ?: GameResult.Pending
     }
@@ -71,9 +72,9 @@ class Game(val size: Int, val is3D: Boolean) {
                     sum += gameBoards[z][y][x].value
                 }
                 if (sum == size) {
-                    return GameResult.Over(PlayerType.Cross)
+                    return GameResult.Over(PlayerType.Cross, gameBoards[z].map { it[x] })
                 } else if (sum == -size) {
-                    return GameResult.Over(PlayerType.Nought)
+                    return GameResult.Over(PlayerType.Nought, gameBoards[z].map { it[x] })
                 }
             }
         }
@@ -88,9 +89,9 @@ class Game(val size: Int, val is3D: Boolean) {
                     it.value
                 }
                 if (sum == size) {
-                    return GameResult.Over(PlayerType.Cross)
+                    return GameResult.Over(PlayerType.Cross, row.toList())
                 } else if (sum == -size) {
-                    return GameResult.Over(PlayerType.Nought)
+                    return GameResult.Over(PlayerType.Nought, row.toList())
                 }
             }
         }
@@ -105,9 +106,13 @@ class Game(val size: Int, val is3D: Boolean) {
                 sum += gameBoards[z][i][i].value
             }
             if (sum == size) {
-                return GameResult.Over(PlayerType.Cross)
+                return GameResult.Over(
+                    PlayerType.Cross,
+                    gameBoards[z].mapIndexed { i, board -> board[i] })
             } else if (sum == -size) {
-                return GameResult.Over(PlayerType.Nought)
+                return GameResult.Over(
+                    PlayerType.Nought,
+                    gameBoards[z].mapIndexed { i, board -> board[i] })
             }
 
             sum = 0
@@ -115,9 +120,13 @@ class Game(val size: Int, val is3D: Boolean) {
                 sum += gameBoards[z][i][size - i - 1].value
             }
             if (sum == size) {
-                return GameResult.Over(PlayerType.Cross)
+                return GameResult.Over(
+                    PlayerType.Cross,
+                    gameBoards[z].mapIndexed { i, board -> board[size - i - 1] })
             } else if (sum == -size) {
-                return GameResult.Over(PlayerType.Nought)
+                return GameResult.Over(
+                    PlayerType.Nought,
+                    gameBoards[z].mapIndexed { i, board -> board[size - i - 1] })
             }
         }
         return null
@@ -131,9 +140,13 @@ class Game(val size: Int, val is3D: Boolean) {
             sum += gameBoards[i][i][i].value
         }
         if (sum == size) {
-            return GameResult.Over(PlayerType.Cross)
+            return GameResult.Over(
+                PlayerType.Cross,
+                gameBoards.mapIndexed { i, board -> board[i][i] })
         } else if (sum == -size) {
-            return GameResult.Over(PlayerType.Nought)
+            return GameResult.Over(
+                PlayerType.Nought,
+                gameBoards.mapIndexed { i, board -> board[i][i] })
         }
 
         sum = 0
@@ -141,9 +154,13 @@ class Game(val size: Int, val is3D: Boolean) {
             sum += gameBoards[i][size - i - 1][size - i - 1].value
         }
         if (sum == size) {
-            return GameResult.Over(PlayerType.Cross)
+            return GameResult.Over(
+                PlayerType.Cross,
+                gameBoards.mapIndexed { i, board -> board[size - i - 1][size - i - 1] })
         } else if (sum == -size) {
-            return GameResult.Over(PlayerType.Nought)
+            return GameResult.Over(
+                PlayerType.Nought,
+                gameBoards.mapIndexed { i, board -> board[size - i - 1][size - i - 1] })
         }
         return null
     }
@@ -157,9 +174,9 @@ class Game(val size: Int, val is3D: Boolean) {
                     sum += gameBoards[z][y][x].value
                 }
                 if (sum == size) {
-                    return GameResult.Over(PlayerType.Cross)
+                    return GameResult.Over(PlayerType.Cross, gameBoards.map { it[y][x] })
                 } else if (sum == -size) {
-                    return GameResult.Over(PlayerType.Nought)
+                    return GameResult.Over(PlayerType.Nought, gameBoards.map { it[y][x] })
                 }
             }
         }

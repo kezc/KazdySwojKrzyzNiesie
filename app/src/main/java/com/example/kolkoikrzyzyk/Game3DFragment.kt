@@ -7,7 +7,6 @@ import android.view.View
 import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.Toast
-import com.example.kolkoikrzyzyk.model.game.FieldType
 import com.example.kolkoikrzyzyk.model.game.GameResult
 import kotlinx.android.synthetic.main.fragment_game.*
 import kotlin.math.roundToInt
@@ -22,23 +21,12 @@ class Game3DFragment : BaseGameFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-//        usersViewModel.users.observe(viewLifecycleOwner, {
-//            Log.d(TAG, it.toString())
-//        })
-
         createBoard(gameViewModel.size)
 
-        gameViewModel.boardState.observe(viewLifecycleOwner, {
-            it?.let {
-                it.forEachIndexed { z, board ->
-                    board.forEachIndexed { y, row ->
-                        row.forEachIndexed { x, field ->
-                            val button = buttons[z][y][x]
-                            button.isClickable = field.type == FieldType.Empty
-                            setButtonImage(button, field.type)
-                        }
-                    }
-                }
+        gameViewModel.lastSuccessfulMove.observe(viewLifecycleOwner, {
+            it?.let { field ->
+                val button = buttons[field.z][field.y][field.x]
+                onMarkPlaced(button, field)
             }
         })
 
@@ -76,13 +64,7 @@ class Game3DFragment : BaseGameFragment() {
     override fun onDraw() {
         Toast.makeText(requireContext(), "REMIS", Toast.LENGTH_LONG)
             .show()
-        buttons.forEach { board ->
-            board.forEach { row ->
-                row.forEach { button ->
-                    button.isClickable = false
-                }
-            }
-        }
+        disableButtons()
     }
 
     override fun onWin(result: GameResult.Over) {
@@ -91,13 +73,30 @@ class Game3DFragment : BaseGameFragment() {
             "WYGRAL ${result.winner}",
             Toast.LENGTH_LONG
         ).show()
-        buttons.forEach { board ->
-            board.forEach { row ->
-                row.forEach { button -> button.isClickable = false }
-            }
+        disableButtons()
+        result.winningFields.forEach { field ->
+            onWinAnimation(buttons[field.z][field.y][field.x], field)
         }
     }
 
+    override fun disableButtons() {
+        buttons.forEach { board ->
+            board.forEach { row ->
+                row.forEach { button ->
+                    button.isClickable = false
+                }
+            }
+        }
+    }
+    override fun enableButtons() {
+        buttons.forEach { board ->
+            board.forEach { row ->
+                row.forEach { button ->
+                    button.isClickable = true
+                }
+            }
+        }
+    }
 
     private fun setRotation() {
         gameContainer.setOnTouchListener(object : View.OnTouchListener {

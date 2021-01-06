@@ -20,7 +20,8 @@ class ComputerPlayer(
         maxDepth = when {
             leftFields <= 9 -> 9
             leftFields <= 12 -> 6
-            leftFields <= 16 -> 4
+            leftFields <= 14 -> 5
+            leftFields <= 18 -> 4
             leftFields <= 27 -> 3
             else -> 2
         }
@@ -59,12 +60,10 @@ class ComputerPlayer(
         }
     }
 
-    fun move() {
+    fun move(): Field? {
         updateMaxDepth()
         var max = Int.MIN_VALUE
         val availableFields = game.getAvailableFields()
-        Log.d("ComputerPlayer", availableFields.joinToString())
-
         var field = availableFields.getOrNull(0)
         availableFields.forEach {
             game.makeMove(it.x, it.y, it.z)
@@ -78,5 +77,6 @@ class ComputerPlayer(
         field?.let {
             game.makeMove(it.x, it.y, it.z)
         }
+        return field
     }
 }

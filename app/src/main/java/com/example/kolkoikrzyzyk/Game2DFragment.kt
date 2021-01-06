@@ -1,7 +1,6 @@
 package com.example.kolkoikrzyzyk
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.ImageButton
 import android.widget.LinearLayout
@@ -22,22 +21,13 @@ class Game2DFragment : BaseGameFragment() {
         val size = gameViewModel.size
 
         createBoard(size)
-        gameViewModel.boardState.observe(viewLifecycleOwner, {
-            it?.let {
-                it[0].forEachIndexed { y, row ->
-                    row.forEachIndexed { x, field ->
-                        val button = buttons[y][x]
-                        button.isClickable = field.type == FieldType.Empty
-                        setButtonImage(button, field.type)
-                    }
-                }
+        gameViewModel.lastSuccessfulMove.observe(viewLifecycleOwner, {
+            it?.let { field ->
+                val button = buttons[field.y][field.x]
+                button.isClickable = field.type == FieldType.Empty
+                button.setFieldImage(field.type)
             }
         })
-
-        gameViewModel.computerThinking.observe(viewLifecycleOwner) {
-            if (it) disableButtons()
-            else enableButtons()
-        }
 
         gameViewModel.startGame()
     }
@@ -55,13 +45,16 @@ class Game2DFragment : BaseGameFragment() {
             Toast.LENGTH_LONG
         ).show()
         disableButtons()
+        result.winningFields.forEach { field ->
+            onWinAnimation(buttons[field.y][field.x], field)
+        }
     }
 
-    private fun disableButtons() {
+    override fun disableButtons() {
         buttons.forEach { it.forEach { button -> button.isClickable = false } }
     }
 
-    private fun enableButtons() {
+    override fun enableButtons() {
         buttons.forEach { it.forEach { button -> button.isClickable = true } }
     }
 

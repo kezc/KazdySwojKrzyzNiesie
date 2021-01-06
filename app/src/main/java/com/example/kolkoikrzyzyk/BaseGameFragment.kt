@@ -1,5 +1,6 @@
 package com.example.kolkoikrzyzyk
 
+import android.animation.ValueAnimator
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +10,7 @@ import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.example.kolkoikrzyzyk.model.game.Field
 import com.example.kolkoikrzyzyk.model.game.FieldType
 import com.example.kolkoikrzyzyk.model.game.GameResult
 import com.example.kolkoikrzyzyk.viewModels.GameViewModel
@@ -41,7 +43,16 @@ abstract class BaseGameFragment : Fragment() {
                 }
             }
         })
+
+        gameViewModel.computerThinking.observe(viewLifecycleOwner) {
+            if (it) disableButtons()
+            else enableButtons()
+        }
     }
+
+    abstract fun enableButtons()
+
+    abstract fun disableButtons()
 
     protected abstract fun onDraw()
 
@@ -71,18 +82,55 @@ abstract class BaseGameFragment : Fragment() {
                     gameViewModel.makeMove(x, y, z)
                 }
                 setBackgroundColor(resources.getColor(R.color.secondaryLightColor))
+                setFieldImage(FieldType.Empty)
             }
 
-    protected fun setButtonImage(
-        button: ImageButton,
+    protected fun ImageButton.setFieldImage(
         field: FieldType
     ) {
-        button.setImageResource(
+        setImageResource(
             when (field) {
                 FieldType.Cross -> R.drawable.cross
                 FieldType.Nought -> R.drawable.nought
                 FieldType.Empty -> R.drawable.border
             }
         )
+    }
+
+    protected fun onMarkPlaced(
+        button: ImageButton,
+        field: Field
+    ) {
+        button.isClickable = field.type == FieldType.Empty
+        button.setFieldImage(field.type)
+        ValueAnimator.ofArgb(
+            resources.getColor(R.color.secondaryLightColor),
+            resources.getColor(R.color.warningColor),
+            resources.getColor(R.color.secondaryLightColor)
+        ).apply {
+            duration = 400
+            addUpdateListener { valueAnimator ->
+                button.setBackgroundColor(valueAnimator.animatedValue as Int)
+            }
+            start()
+        }
+    }
+
+    protected fun onWinAnimation(
+        button: ImageButton,
+        field: Field
+    ) {
+        button.isClickable = field.type == FieldType.Empty
+        button.setFieldImage(field.type)
+        ValueAnimator.ofArgb(
+            resources.getColor(R.color.secondaryLightColor),
+            resources.getColor(R.color.warningColor),
+        ).apply {
+            duration = 400
+            addUpdateListener { valueAnimator ->
+                button.setBackgroundColor(valueAnimator.animatedValue as Int)
+            }
+            start()
+        }
     }
 }
