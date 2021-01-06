@@ -9,7 +9,8 @@
             <shape
                 android:shape="line"
                 android:top="1dip">
-                <stroke android:width="2dp" />
+                <stroke android:width="2dp"
+                    android:color="@color/secondaryDarkColor"/>
             </shape>
         </rotate>
     </item>
@@ -22,7 +23,8 @@
             <shape
                 android:shape="line"
                 android:top="1dip">
-                <stroke android:width="2dp" />
+                <stroke android:width="2dp"
+                    android:color="@color/secondaryDarkColor"/>
             </shape>
         </rotate>
     </item>
@@ -30,7 +32,7 @@
         <shape>
             <stroke
                 android:width="2dp"
-                android:color="#000" />
+                android:color="@color/secondaryDarkColor" />
         </shape>
     </item>
 </layer-list>
