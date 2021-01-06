@@ -70,7 +70,7 @@ abstract class BaseGameFragment : Fragment() {
                 setOnClickListener {
                     gameViewModel.makeMove(x, y, z)
                 }
-
+                setBackgroundColor(resources.getColor(R.color.white))
             }
 
     protected fun setButtonImage(
