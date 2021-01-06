@@ -1,6 +1,5 @@
 package com.example.kolkoikrzyzyk.model.game
 
-import android.util.Log
 import kotlin.math.max
 import kotlin.math.min
 
@@ -27,7 +26,7 @@ class ComputerPlayer(
         }
     }
 
-    fun minmax(depth: Int, turn: PlayerType): Int {
+    fun minMax(depth: Int, turn: PlayerType): Int {
         val result = game.checkForWin()
         if (result is GameResult.Draw || depth == maxDepth) return 0
         if (result is GameResult.Over) {
@@ -45,7 +44,7 @@ class ComputerPlayer(
             var max = Int.MIN_VALUE
             availableFields.forEach { field ->
                 game.makeMove(field.x, field.y, field.z)
-                max = max(minmax(depth + 1, enemyType), max)
+                max = max(minMax(depth + 1, enemyType), max)
                 game.clearField(field.x, field.y, field.z)
             }
             max
@@ -53,7 +52,7 @@ class ComputerPlayer(
             var min = Int.MAX_VALUE
             availableFields.forEach { field ->
                 game.makeMove(field.x, field.y, field.z)
-                min = min(minmax(depth + 1, type), min)
+                min = min(minMax(depth + 1, type), min)
                 game.clearField(field.x, field.y, field.z)
             }
             min
@@ -67,7 +66,7 @@ class ComputerPlayer(
         var field = availableFields.getOrNull(0)
         availableFields.forEach {
             game.makeMove(it.x, it.y, it.z)
-            val value = minmax(0, enemyType)
+            val value = minMax(0, enemyType)
             if (value > max) {
                 max = value
                 field = it

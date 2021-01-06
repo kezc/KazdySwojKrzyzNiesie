@@ -1,3 +1,8 @@
 package com.example.kolkoikrzyzyk.model
 
-data class User(val uid: Long, val name: String)
+import android.os.Parcel
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
+@Parcelize
+data class User(val uid: Long, val name: String) : Parcelable

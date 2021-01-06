@@ -16,7 +16,7 @@ class MainFragment : Fragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_main, container, false)
         view.setOnClickListener {
-            findNavController().navigate(MainFragmentDirections.actionMainFragmentToGame3DFragment())
+            findNavController().navigate(MainFragmentDirections.actionMainFragmentToSingleGameSettingsFragment())
         }
         return view
     }

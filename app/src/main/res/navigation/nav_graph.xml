@@ -24,6 +24,15 @@
         <action
             android:id="@+id/action_game2DFragment_to_mainFragment"
             app:destination="@id/mainFragment" />
+        <argument
+            android:name="noughtUser"
+            app:argType="com.example.kolkoikrzyzyk.model.User" />
+        <argument
+            android:name="crossUser"
+            app:argType="com.example.kolkoikrzyzyk.model.User" />
+        <argument
+            android:name="size"
+            app:argType="integer" />
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
@@ -46,8 +55,8 @@
             android:id="@+id/action_mainFragment_to_game2DFragment"
             app:destination="@id/game2DFragment" />
         <action
-            android:id="@+id/action_mainFragment_to_game3DFragment"
-            app:destination="@id/game3DFragment" />
+            android:id="@+id/action_mainFragment_to_singleGameSettingsFragment"
+            app:destination="@id/singleGameSettingsFragment" />
     </fragment>
     <fragment
         android:id="@+id/game3DFragment"
@@ -55,7 +64,28 @@
         android:label="fragment_game"
         tools:layout="@layout/fragment_game" >
         <action
-            android:id="@+id/action_game3DFragment_to_mainFragment2"
+            android:id="@+id/action_game3DFragment_to_mainFragment"
             app:destination="@id/mainFragment" />
+        <argument
+            android:name="noughtUser"
+            app:argType="com.example.kolkoikrzyzyk.model.User" />
+        <argument
+            android:name="crossUser"
+            app:argType="com.example.kolkoikrzyzyk.model.User" />
+        <argument
+            android:name="size"
+            app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/singleGameSettingsFragment"
+        android:name="com.example.kolkoikrzyzyk.SingleGameSettingsFragment"
+        android:label="fragment_single_game_settings"
+        tools:layout="@layout/fragment_single_game_settings" >
+        <action
+            android:id="@+id/action_singleGameSettingsFragment_to_game3DFragment"
+            app:destination="@id/game3DFragment" />
+        <action
+            android:id="@+id/action_singleGameSettingsFragment_to_game2DFragment"
+            app:destination="@id/game2DFragment" />
     </fragment>
 </navigation>
