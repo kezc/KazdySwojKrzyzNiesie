@@ -6,6 +6,7 @@ import androidx.lifecycle.switchMap
 import com.example.kolkoikrzyzyk.database.DbUser
 import com.example.kolkoikrzyzyk.database.UserDao
 import com.example.kolkoikrzyzyk.model.User
+import kotlin.concurrent.thread
 
 class UserRepository(private val userDao: UserDao) {
     suspend fun registerNewUser(name: String, password: String) =
@@ -19,12 +20,24 @@ class UserRepository(private val userDao: UserDao) {
         }
     }
 
-    suspend fun logoutUser(user: User) {
-        userDao.update(user.toDbUser(false))
+//    suspend fun logoutUser(user: User) {
+//        userDao.update(user.toDbUser(false))
+//    }
+
+    fun logoutUser(user: User) {
+        thread {
+            userDao.update(user.toDbUser(false))
+        }
     }
 
-    suspend fun updateUser(user: User) {
-        userDao.update(user.toDbUser(true))
+//    suspend fun updateUser(user: User) {
+//        userDao.update(user.toDbUser(true))
+//    }
+
+    fun updateUser(user: User) {
+        thread {
+            userDao.update(user.toDbUser(true))
+        }
     }
 
     fun getAllUsers() =

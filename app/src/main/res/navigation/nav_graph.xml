@@ -23,7 +23,9 @@
         android:label="Game2DFragment" >
         <action
             android:id="@+id/action_game2DFragment_to_mainFragment"
-            app:destination="@id/mainFragment" />
+            app:destination="@id/mainFragment"
+            app:popUpTo="@id/game2DFragment"
+            app:popUpToInclusive="true" />
         <argument
             android:name="noughtUser"
             app:argType="com.example.kolkoikrzyzyk.model.User" />
@@ -68,7 +70,9 @@
         tools:layout="@layout/fragment_game" >
         <action
             android:id="@+id/action_game3DFragment_to_mainFragment"
-            app:destination="@id/mainFragment" />
+            app:destination="@id/mainFragment"
+            app:popUpTo="@id/game3DFragment"
+            app:popUpToInclusive="true" />
         <argument
             android:name="noughtUser"
             app:argType="com.example.kolkoikrzyzyk.model.User" />

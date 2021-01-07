@@ -13,7 +13,8 @@ interface UserDao {
     suspend fun insert(user: DbUser): Long
 
     @Update
-    suspend fun update(user: DbUser)
+//    suspend fun update(user: DbUser)
+    fun update(user: DbUser)
 
     @Query("SELECT * FROM user")
     fun getAllUsers(): LiveData<List<DbUser>>

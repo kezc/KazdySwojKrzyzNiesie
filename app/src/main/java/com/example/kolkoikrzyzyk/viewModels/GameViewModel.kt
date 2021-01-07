@@ -9,6 +9,11 @@ import com.example.kolkoikrzyzyk.model.game.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.util.concurrent.Callable
+import java.util.concurrent.Executors
+import java.util.concurrent.Future
+import kotlin.concurrent.thread
+
 
 class GameViewModel(application: Application) : AndroidViewModel(application) {
     private val TAG = "GameViewModel"
@@ -63,24 +68,43 @@ class GameViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
+    //    private fun computerMove() = computer?.let {
+//        viewModelScope.launch {
+//            withContext(Dispatchers.Main) {
+//                _computerThinking.value = true
+//                val field = withContext(Dispatchers.Default) {
+//                    it.move()
+//                }
+//                _lastSuccessfulMove.value = field
+//                val result = game.checkForWin()
+//                _gameResult.value = result
+//                if (result is GameResult.Pending) {
+//                    _computerThinking.value = false
+//                    _currentPlayer.value = game.currentPlayer
+//                } else {
+//                    onGameEnd(result)
+//                }
+//            }
+//        }
+//    }
+    
     private fun computerMove() = computer?.let {
-        viewModelScope.launch {
-            withContext(Dispatchers.Main) {
-                _computerThinking.value = true
-                val field = withContext(Dispatchers.Default) {
-                    it.move()
-                }
-                _lastSuccessfulMove.value = field
-                val result = game.checkForWin()
-                _gameResult.value = result
-                if (result is GameResult.Pending) {
-                    _computerThinking.value = false
-                    _currentPlayer.value = game.currentPlayer
-                } else {
-                    onGameEnd(result)
-                }
-            }
+        val executor = Executors.newSingleThreadExecutor()
+        val callable: Callable<Field?> = Callable<Field?> { it.move() }
+        val future = executor.submit(callable)
+
+        _computerThinking.value = true
+        _lastSuccessfulMove.value = future.get()
+        val result = game.checkForWin()
+        _gameResult.value = result
+        if (result is GameResult.Pending) {
+            _computerThinking.value = false
+            _currentPlayer.value = game.currentPlayer
+        } else {
+            onGameEnd(result)
         }
+        executor.shutdown()
+
     }
 
     private fun onGameEnd(gameResult: GameResult) =
