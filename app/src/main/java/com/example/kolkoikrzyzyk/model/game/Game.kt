@@ -58,6 +58,7 @@ class Game(val size: Int, val is3D: Boolean) {
         if (winResult != null) {
             hasEnded = true
         } else if (moveCount == size * size * height) {
+            hasEnded = true
             return GameResult.Draw
         }
         return winResult ?: GameResult.Pending

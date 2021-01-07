@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.Toast
+import androidx.navigation.fragment.navArgs
 import com.example.kolkoikrzyzyk.model.game.GameResult
 import kotlinx.android.synthetic.main.fragment_game.*
 import kotlin.math.roundToInt
@@ -14,12 +15,18 @@ import kotlin.math.roundToInt
 class Game3DFragment : BaseGameFragment() {
     private val TAG = "Game3DFragment"
 
+    private val args: Game3DFragmentArgs by navArgs()
     private lateinit var buttons: MutableList<List<List<ImageButton>>>
     private val boards = mutableListOf<LinearLayout>()
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        gameViewModel.is3D = false
+        gameViewModel.size = args.size
+        gameViewModel.noughtUser = args.noughtUser
+        gameViewModel.crossUser = args.crossUser
 
         createBoard(gameViewModel.size)
 

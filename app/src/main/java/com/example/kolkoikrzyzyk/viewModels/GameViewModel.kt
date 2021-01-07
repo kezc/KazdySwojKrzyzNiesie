@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.kolkoikrzyzyk.model.User
 import com.example.kolkoikrzyzyk.model.game.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -12,9 +13,10 @@ import kotlinx.coroutines.withContext
 class GameViewModel : ViewModel() {
     private val TAG = "GameViewModel"
     private var isGameWithComputer = false
-    private var players = listOf("wojtek")
+    lateinit var noughtUser: User
+    lateinit var crossUser: User
     var size = 3
-    var is3D = true
+    var is3D = false
     private lateinit var game: Game
     private var computer: ComputerPlayer? = null
     private val _lastSuccessfulMove = MutableLiveData<Field?>()

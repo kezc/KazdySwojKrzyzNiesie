@@ -5,6 +5,7 @@ import android.view.View
 import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.Toast
+import androidx.navigation.fragment.navArgs
 import com.example.kolkoikrzyzyk.model.game.FieldType
 import com.example.kolkoikrzyzyk.model.game.GameResult
 import kotlinx.android.synthetic.main.fragment_game.*
@@ -14,13 +15,18 @@ class Game2DFragment : BaseGameFragment() {
     private val TAG = "Game2DFragment"
 
     private lateinit var buttons: List<List<ImageButton>>
+    private val args: Game2DFragmentArgs by navArgs()
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val size = gameViewModel.size
+        gameViewModel.is3D = false
+        gameViewModel.size = args.size
+        gameViewModel.noughtUser = args.noughtUser
+        gameViewModel.crossUser = args.crossUser
 
-        createBoard(size)
+        createBoard(gameViewModel.size)
         gameViewModel.lastSuccessfulMove.observe(viewLifecycleOwner, {
             it?.let { field ->
                 val button = buttons[field.y][field.x]
@@ -59,7 +65,7 @@ class Game2DFragment : BaseGameFragment() {
     }
 
     private fun createBoard(size: Int) {
-        val buttonSize = (if (size == 4) 64f else 96f).dpToPixels(resources).roundToInt()
+        val buttonSize = (if (size == 4) 84f else 96f).dpToPixels(resources).roundToInt()
 
         val tempButtons = mutableListOf<MutableList<ImageButton>>()
         val column = linearLayoutContainer(LinearLayout.VERTICAL)
