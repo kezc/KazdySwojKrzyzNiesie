@@ -20,7 +20,7 @@ import kotlinx.android.synthetic.main.fragment_single_game_settings.*
 class SingleGameSettingsFragment : Fragment() {
     private val TAG = "SingleGameSettingsFragment"
 
-    private val computerUser = User(-1, "Computer")
+    private val computerUser = User(-1, "Computer", "")
     private val usersViewModel: UsersViewModel by activityViewModels()
     private val singleGameSettingsViewModel: SingleGameSettingsViewModel by viewModels()
     private var users = listOf(computerUser)

@@ -42,7 +42,7 @@ class UsersViewModel(application: Application) : AndroidViewModel(application) {
             repository.registerNewUser(name, password)
         }
         if (id != -1L) {
-            addUser(User(id, name))
+            addUser(User(id, name, password))
             _operationSuccessful.value = Event(true)
         } else {
             _operationSuccessful.value = Event(false)

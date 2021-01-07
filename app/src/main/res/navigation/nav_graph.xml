@@ -57,6 +57,9 @@
         <action
             android:id="@+id/action_mainFragment_to_singleGameSettingsFragment"
             app:destination="@id/singleGameSettingsFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_rankingFragment"
+            app:destination="@id/rankingFragment" />
     </fragment>
     <fragment
         android:id="@+id/game3DFragment"
@@ -88,4 +91,9 @@
             android:id="@+id/action_singleGameSettingsFragment_to_game2DFragment"
             app:destination="@id/game2DFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/rankingFragment"
+        android:name="com.example.kolkoikrzyzyk.RankingFragment"
+        android:label="fragment_ranking"
+        tools:layout="@layout/fragment_ranking" />
 </navigation>

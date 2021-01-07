@@ -10,10 +10,13 @@ import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.transition.Visibility
 import com.example.kolkoikrzyzyk.model.game.Field
 import com.example.kolkoikrzyzyk.model.game.FieldType
 import com.example.kolkoikrzyzyk.model.game.GameResult
+import com.example.kolkoikrzyzyk.model.game.PlayerType
 import com.example.kolkoikrzyzyk.viewModels.GameViewModel
+import kotlinx.android.synthetic.main.fragment_game.*
 
 
 abstract class BaseGameFragment : Fragment() {
@@ -37,8 +40,14 @@ abstract class BaseGameFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         gameViewModel.gameResult.observe(viewLifecycleOwner, { result ->
             when (result) {
-                is GameResult.Over -> onWin(result)
-                GameResult.Draw -> onDraw()
+                is GameResult.Over -> {
+                    onWin(result)
+                    endGameButton.visibility = View.VISIBLE
+                }
+                GameResult.Draw -> {
+                    onDraw()
+                    endGameButton.visibility = View.VISIBLE
+                }
                 GameResult.Pending, null -> {
                 }
             }
@@ -48,6 +57,14 @@ abstract class BaseGameFragment : Fragment() {
             if (it) disableButtons()
             else enableButtons()
         }
+        gameViewModel.currentPlayer.observe(viewLifecycleOwner) {
+            val image = if (it == PlayerType.Cross) R.drawable.cross else R.drawable.nought
+            val name =
+                if (it == PlayerType.Cross) gameViewModel.crossUser.name else gameViewModel.noughtUser.name
+            currentPlayerImageView.setImageResource(image)
+            currentPlayerText.text = name
+        }
+
     }
 
     abstract fun enableButtons()

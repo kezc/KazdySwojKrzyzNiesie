@@ -1,5 +1,6 @@
 package com.example.kolkoikrzyzyk.model.game
 
+import android.util.Log
 import kotlin.math.max
 import kotlin.math.min
 
@@ -64,6 +65,7 @@ class ComputerPlayer(
         var max = Int.MIN_VALUE
         val availableFields = game.getAvailableFields()
         var field = availableFields.getOrNull(0)
+        Log.d("ComputerPlayer", availableFields.toString())
         availableFields.forEach {
             game.makeMove(it.x, it.y, it.z)
             val value = minMax(0, enemyType)

@@ -4,7 +4,7 @@ import android.util.Log
 
 class Game(val size: Int, val is3D: Boolean) {
     private val TAG = "Game"
-    var currentPlayer = PlayerType.Nought
+    var currentPlayer = PlayerType.Cross
         private set
     var moveCount = 0
         private set

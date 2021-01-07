@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.Toast
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.kolkoikrzyzyk.model.game.GameResult
 import kotlinx.android.synthetic.main.fragment_game.*
@@ -23,10 +24,11 @@ class Game3DFragment : BaseGameFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        gameViewModel.is3D = false
+        gameViewModel.is3D = true
         gameViewModel.size = args.size
         gameViewModel.noughtUser = args.noughtUser
         gameViewModel.crossUser = args.crossUser
+        Log.d(TAG, "nought ${gameViewModel.noughtUser} cross ${gameViewModel.crossUser}")
 
         createBoard(gameViewModel.size)
 
@@ -36,6 +38,10 @@ class Game3DFragment : BaseGameFragment() {
                 onMarkPlaced(button, field)
             }
         })
+
+        endGameButton.setOnClickListener {
+            findNavController().navigate(Game3DFragmentDirections.actionGame3DFragmentToMainFragment())
+        }
 
         gameViewModel.startGame()
     }

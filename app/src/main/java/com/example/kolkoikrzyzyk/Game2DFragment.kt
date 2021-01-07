@@ -5,6 +5,7 @@ import android.view.View
 import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.Toast
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.kolkoikrzyzyk.model.game.FieldType
 import com.example.kolkoikrzyzyk.model.game.GameResult
@@ -34,6 +35,10 @@ class Game2DFragment : BaseGameFragment() {
                 button.setFieldImage(field.type)
             }
         })
+
+        endGameButton.setOnClickListener {
+            findNavController().navigate(Game2DFragmentDirections.actionGame2DFragmentToMainFragment())
+        }
 
         gameViewModel.startGame()
     }

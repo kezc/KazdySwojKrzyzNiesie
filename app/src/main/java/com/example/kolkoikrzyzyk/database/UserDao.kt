@@ -1,8 +1,9 @@
 package com.example.kolkoikrzyzyk.database
 
+import androidx.lifecycle.LiveData
 import androidx.room.*
+import kotlinx.coroutines.flow.Flow
 
-//TODO dodaj dobre funkcje
 @Dao
 interface UserDao {
     @Query("SELECT * FROM user WHERE name = :name LIMIT 1")
@@ -11,6 +12,9 @@ interface UserDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(user: DbUser): Long
 
-    @Query("UPDATE user SET isLogged = :isLogged WHERE uid = :uid")
-    suspend fun updateLoginStatus(uid: Long, isLogged: Boolean)
+    @Update
+    suspend fun update(user: DbUser)
+
+    @Query("SELECT * FROM user")
+    fun getAllUsers(): LiveData<List<DbUser>>
 }
