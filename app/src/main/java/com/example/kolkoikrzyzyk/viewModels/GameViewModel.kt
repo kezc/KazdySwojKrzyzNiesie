@@ -2,6 +2,7 @@ package com.example.kolkoikrzyzyk.viewModels
 
 import android.app.Application
 import androidx.lifecycle.*
+import com.example.kolkoikrzyzyk.MainActivity
 import com.example.kolkoikrzyzyk.UserRepository
 import com.example.kolkoikrzyzyk.database.AppDatabase
 import com.example.kolkoikrzyzyk.model.User
@@ -87,25 +88,30 @@ class GameViewModel(application: Application) : AndroidViewModel(application) {
 //            }
 //        }
 //    }
-    
-    private fun computerMove() = computer?.let {
-        val executor = Executors.newSingleThreadExecutor()
-        val callable: Callable<Field?> = Callable<Field?> { it.move() }
-        val future = executor.submit(callable)
 
-        _computerThinking.value = true
-        _lastSuccessfulMove.value = future.get()
-        val result = game.checkForWin()
-        _gameResult.value = result
-        if (result is GameResult.Pending) {
-            _computerThinking.value = false
-            _currentPlayer.value = game.currentPlayer
-        } else {
-            onGameEnd(result)
+        private fun computerMove() = computer?.let {
+        viewModelScope.launch {
+            withContext(Dispatchers.Main) {
+                _computerThinking.value = true
+                val field = withContext(Dispatchers.Default) {
+                    val executor = Executors.newSingleThreadExecutor()
+                    val callable: Callable<Field?> = Callable<Field?> { it.move() }
+                    val future = executor.submit(callable)
+                    future.get()
+                }
+                _lastSuccessfulMove.value = field
+                val result = game.checkForWin()
+                _gameResult.value = result
+                if (result is GameResult.Pending) {
+                    _computerThinking.value = false
+                    _currentPlayer.value = game.currentPlayer
+                } else {
+                    onGameEnd(result)
+                }
+            }
         }
-        executor.shutdown()
-
     }
+
 
     private fun onGameEnd(gameResult: GameResult) =
         viewModelScope.launch {

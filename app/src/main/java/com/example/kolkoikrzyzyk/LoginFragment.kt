@@ -47,7 +47,7 @@ class LoginFragment : Fragment() {
                         LoginFragmentDirections.actionLoginFragmentToMainFragment()
                     )
                 } else {
-                    // login error
+                    errorMessage.text = "Log in was not successful"
                 }
             }
         }

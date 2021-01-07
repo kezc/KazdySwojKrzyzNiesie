@@ -20,6 +20,8 @@ class UsersViewModel(application: Application) : AndroidViewModel(application) {
     val operationSuccessful: LiveData<Event<Boolean>>
         get() = _operationSuccessful
 
+    var message = ""
+
     private fun addUser(user: User) {
         _users.value?.add(user)
         _users.notifyObserver()
@@ -38,6 +40,11 @@ class UsersViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun register(name: String, password: String) = viewModelScope.launch {
+        if (name.isBlank() || password.isBlank()) {
+            message = "Fields cannot be empty"
+            _operationSuccessful.value = Event(false)
+            return@launch
+        }
         val id = withContext(Dispatchers.IO) {
             repository.registerNewUser(name, password)
         }
@@ -55,6 +62,7 @@ class UsersViewModel(application: Application) : AndroidViewModel(application) {
         }
         _users.value?.remove(user)
         _operationSuccessful.value = Event(true)
+        _users.notifyObserver()
     }
 }
 

@@ -2,6 +2,7 @@ package com.example.kolkoikrzyzyk
 
 import android.animation.ValueAnimator
 import android.os.Bundle
+import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,7 +11,6 @@ import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.transition.Visibility
 import com.example.kolkoikrzyzyk.model.game.Field
 import com.example.kolkoikrzyzyk.model.game.FieldType
 import com.example.kolkoikrzyzyk.model.game.GameResult
@@ -23,6 +23,9 @@ abstract class BaseGameFragment : Fragment() {
 
     //    protected val usersViewModel: UsersViewModel by activityViewModels()
     protected val gameViewModel: GameViewModel by viewModels()
+    private var startingClick = true
+    var timerHandler: Handler? = null
+    var timePassed = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,13 +45,22 @@ abstract class BaseGameFragment : Fragment() {
             when (result) {
                 is GameResult.Over -> {
                     onWin(result)
+                    endGameButton.text = "${result.winner.name} has won"
                     endGameButton.visibility = View.VISIBLE
+                    timerHandler?.removeCallbacksAndMessages(null)
+                    timerHandler = null
                 }
                 GameResult.Draw -> {
                     onDraw()
+                    endGameButton.text = "DRAW"
                     endGameButton.visibility = View.VISIBLE
+                    timerHandler?.removeCallbacksAndMessages(null)
+                    timerHandler = null
                 }
                 GameResult.Pending, null -> {
+                    if (startingClick) {
+                        startTimer()
+                    }
                 }
             }
         })
@@ -131,6 +143,23 @@ abstract class BaseGameFragment : Fragment() {
             }
             start()
         }
+    }
+
+    private fun startTimer() {
+        startingClick = false
+        timerHandler = Handler()
+        timerHandler?.postDelayed(object : Runnable {
+            override fun run() {
+                val minutes = (timePassed / 60).toString().padStart(2, '0')
+                val seconds = (timePassed % 60).toString().padStart(2, '0')
+                timer?.let {
+                    it.text = "$minutes:$seconds"
+                    timerHandler?.postDelayed(this, 1000)
+                    timePassed++
+                }
+            }
+
+        }, 1000)
     }
 
     protected fun onWinAnimation(

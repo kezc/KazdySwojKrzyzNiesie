@@ -38,9 +38,8 @@ class RegisterFragment : Fragment() {
                     view.findNavController().navigate(
                         RegisterFragmentDirections.actionRegisterFragmentToMainFragment()
                     )
-                }
-                else {
-                    // register error
+                } else {
+                    errorMessage.text = viewModel.message
                 }
             }
         }
