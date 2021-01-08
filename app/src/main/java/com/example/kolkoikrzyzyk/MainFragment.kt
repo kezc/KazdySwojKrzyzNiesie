@@ -1,6 +1,7 @@
 package com.example.kolkoikrzyzyk
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -40,12 +41,15 @@ class MainFragment : Fragment() {
         usersList.adapter = adapter
 
         usersViewModel.users.observe(viewLifecycleOwner) {
-            if (it.size == 0) {
-                findNavController().navigate(MainFragmentDirections.actionMainFragmentToLoginFragment())
-                return@observe
-            }
             adapter.submitList(it.toList())
         }
+
+        usersViewModel.noUsersLeft.observe(viewLifecycleOwner) {
+            it.getContentIfNotHandled()?.let {
+                findNavController().navigate(MainFragmentDirections.actionMainFragmentToLoginFragmentWithoutStack())
+            }
+        }
+
     }
 
 }

@@ -6,6 +6,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
 import com.example.kolkoikrzyzyk.viewModels.UsersViewModel
@@ -35,6 +37,13 @@ class RegisterFragment : Fragment() {
         viewModel.operationSuccessful.observe(viewLifecycleOwner) { event ->
             event.getContentIfNotHandled()?.let {
                 if (it) {
+                    nameEditText.setText("")
+                    passwordEditText.setText("")
+                    val imm = ContextCompat.getSystemService(
+                        requireContext(),
+                        InputMethodManager::class.java
+                    )
+                    imm?.hideSoftInputFromWindow(view.windowToken, 0)
                     view.findNavController().navigate(
                         RegisterFragmentDirections.actionRegisterFragmentToMainFragment()
                     )

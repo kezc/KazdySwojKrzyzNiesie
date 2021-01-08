@@ -13,11 +13,14 @@ class UserRepository(private val userDao: UserDao) {
         userDao.insert(DbUser(name = name, password = password))
 
     suspend fun loginUser(name: String, password: String): User? {
-        val user = userDao.findByName(name)
-        return user?.run {
-            if (user.password == password) return@run this.toUser()
-            null
+        val dbUser = userDao.findByName(name)
+
+        if (dbUser != null && dbUser.password == password) {
+            val user = dbUser.toUser()
+            updateUser(user)
+            return user
         }
+        return null
     }
 
 //    suspend fun logoutUser(user: User) {
@@ -43,4 +46,8 @@ class UserRepository(private val userDao: UserDao) {
     fun getAllUsers() =
         Transformations.map(userDao.getAllUsers()) { it.map { user -> user.toUser() } }
 
+    fun getLoggedUsers() =
+        Transformations.map(userDao.getLoggedUsers()) {
+            it.map { dbUser -> dbUser.toUser() }.toMutableSet()
+        }
 }

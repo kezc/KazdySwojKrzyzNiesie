@@ -18,4 +18,7 @@ interface UserDao {
 
     @Query("SELECT * FROM user")
     fun getAllUsers(): LiveData<List<DbUser>>
+
+    @Query("SELECT * FROM user WHERE isLogged = 1")
+    fun getLoggedUsers(): LiveData<List<DbUser>>
 }
