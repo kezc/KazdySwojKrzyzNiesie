@@ -1,8 +1,6 @@
-package com.example.kolkoikrzyzyk
+package com.example.kolkoikrzyzyk.repositories
 
 import androidx.lifecycle.Transformations
-import androidx.lifecycle.asLiveData
-import androidx.lifecycle.switchMap
 import com.example.kolkoikrzyzyk.database.DbUser
 import com.example.kolkoikrzyzyk.database.UserDao
 import com.example.kolkoikrzyzyk.model.User

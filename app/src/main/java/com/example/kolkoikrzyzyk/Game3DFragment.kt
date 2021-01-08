@@ -28,6 +28,7 @@ class Game3DFragment : BaseGameFragment() {
         gameViewModel.size = args.size
         gameViewModel.noughtUser = args.noughtUser
         gameViewModel.crossUser = args.crossUser
+        isTournament = args.isTournament
         Log.d(TAG, "nought ${gameViewModel.noughtUser} cross ${gameViewModel.crossUser}")
 
         createBoard(gameViewModel.size)
@@ -40,7 +41,11 @@ class Game3DFragment : BaseGameFragment() {
         })
 
         endGameButton.setOnClickListener {
-            findNavController().navigate(Game3DFragmentDirections.actionGame3DFragmentToMainFragment())
+            if (isTournament) {
+                findNavController().navigate(Game3DFragmentDirections.actionGame3DFragmentToTournamentDetailsFragment())
+            } else {
+                findNavController().navigate(Game3DFragmentDirections.actionGame3DFragmentToMainFragment())
+            }
         }
 
         gameViewModel.startGame()

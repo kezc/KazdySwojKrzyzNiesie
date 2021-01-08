@@ -47,7 +47,7 @@ class SingleGameSettingsFragment : Fragment() {
         }
         singleGameSettingsViewModel.selectError.observe(viewLifecycleOwner) {
             errorMessage.text = it
-            playButton.isEnabled = it.isBlank()
+            createTournamentButton.isEnabled = it.isBlank()
         }
 
         singleGameSettingsViewModel.settingsCompleted.observe(viewLifecycleOwner) { event ->
@@ -80,7 +80,7 @@ class SingleGameSettingsFragment : Fragment() {
         selectPlayerCross.setOnClickListener {
             dialog(PlayerType.Cross)
         }
-        playButton.setOnClickListener {
+        createTournamentButton.setOnClickListener {
             singleGameSettingsViewModel.onPlay()
         }
         sizeRadioGroup.setOnCheckedChangeListener { _, id ->

@@ -27,6 +27,7 @@
             android:padding="16dp">
 
             <TextView
+                android:id="@+id/textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="4dp"
@@ -43,9 +44,18 @@
                 android:layout_height="wrap_content"
                 android:text="Select users"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/sizeRadioGroup" />
+                app:layout_constraintTop_toBottomOf="@+id/nameEditText" />
+
+            <EditText
+                android:layout_margin="4dp"
+                android:id="@+id/nameEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Name"
+                app:layout_constraintBottom_toTopOf="@+id/playerListButton"
+                app:layout_constraintTop_toBottomOf="@+id/sizeRadioGroup"
+                tools:layout_editor_absoluteX="16dp" />
 
             <TextView
                 android:id="@+id/errorMessage"
@@ -57,7 +67,7 @@
                 tools:text="Error msg" />
 
             <Button
-                android:id="@+id/playButton"
+                android:id="@+id/createTournamentButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Create"

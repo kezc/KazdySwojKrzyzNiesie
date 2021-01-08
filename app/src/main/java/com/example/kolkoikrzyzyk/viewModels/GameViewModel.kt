@@ -1,10 +1,8 @@
 package com.example.kolkoikrzyzyk.viewModels
 
 import android.app.Application
-import android.os.Environment
 import androidx.lifecycle.*
-import com.example.kolkoikrzyzyk.MainActivity
-import com.example.kolkoikrzyzyk.UserRepository
+import com.example.kolkoikrzyzyk.repositories.UserRepository
 import com.example.kolkoikrzyzyk.database.AppDatabase
 import com.example.kolkoikrzyzyk.model.User
 import com.example.kolkoikrzyzyk.model.game.*
@@ -14,7 +12,6 @@ import kotlinx.coroutines.withContext
 import java.io.File
 import java.util.concurrent.Callable
 import java.util.concurrent.Executors
-import java.util.concurrent.Future
 import kotlin.concurrent.thread
 
 

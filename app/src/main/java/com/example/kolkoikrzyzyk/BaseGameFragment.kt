@@ -10,12 +10,14 @@ import android.widget.ImageButton
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import com.example.kolkoikrzyzyk.model.game.Field
 import com.example.kolkoikrzyzyk.model.game.FieldType
 import com.example.kolkoikrzyzyk.model.game.GameResult
 import com.example.kolkoikrzyzyk.model.game.PlayerType
 import com.example.kolkoikrzyzyk.viewModels.GameViewModel
+import com.example.kolkoikrzyzyk.viewModels.TournamentViewModel
 import kotlinx.android.synthetic.main.fragment_game.*
 
 
@@ -23,14 +25,11 @@ abstract class BaseGameFragment : Fragment() {
 
     //    protected val usersViewModel: UsersViewModel by activityViewModels()
     protected val gameViewModel: GameViewModel by viewModels()
+    private val tournamentViewModel: TournamentViewModel by activityViewModels()
     private var startingClick = true
     var timerHandler: Handler? = null
     var timePassed = 1
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        activity?.actionBar?.hide()
-    }
+    protected var isTournament = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,6 +43,13 @@ abstract class BaseGameFragment : Fragment() {
         gameViewModel.gameResult.observe(viewLifecycleOwner, { result ->
             when (result) {
                 is GameResult.Over -> {
+                    if (isTournament) {
+                        tournamentViewModel.addResult(
+                            gameViewModel.crossUser,
+                            gameViewModel.noughtUser,
+                            result
+                        )
+                    }
                     onWin(result)
                     endGameButton.text = "${result.winner.name} has won"
                     endGameButton.visibility = View.VISIBLE
@@ -51,6 +57,13 @@ abstract class BaseGameFragment : Fragment() {
                     timerHandler = null
                 }
                 GameResult.Draw -> {
+                    if (isTournament) {
+                        tournamentViewModel.addResult(
+                            gameViewModel.crossUser,
+                            gameViewModel.noughtUser,
+                            result
+                        )
+                    }
                     onDraw()
                     endGameButton.text = "DRAW"
                     endGameButton.visibility = View.VISIBLE

@@ -22,5 +22,5 @@ data class DbUser(
     @ColumnInfo(name = "drawn_games") var drawnGames: Int = 0,
     @ColumnInfo(name = "lost_games") var lostGames: Int = 0
 ) {
-    fun toUser() = User(uid, password, name, wonGames, drawnGames, lostGames)
+    fun toUser() = User(uid, name, password, wonGames, drawnGames, lostGames)
 }

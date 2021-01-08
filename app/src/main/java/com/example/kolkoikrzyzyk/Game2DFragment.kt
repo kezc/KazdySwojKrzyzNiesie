@@ -26,6 +26,7 @@ class Game2DFragment : BaseGameFragment() {
         gameViewModel.size = args.size
         gameViewModel.noughtUser = args.noughtUser
         gameViewModel.crossUser = args.crossUser
+        isTournament = args.isTournament
 
         createBoard(gameViewModel.size)
         gameViewModel.lastSuccessfulMove.observe(viewLifecycleOwner, {
@@ -37,7 +38,11 @@ class Game2DFragment : BaseGameFragment() {
         })
 
         endGameButton.setOnClickListener {
-            findNavController().navigate(Game2DFragmentDirections.actionGame2DFragmentToMainFragment())
+            if (isTournament) {
+                findNavController().navigate(Game2DFragmentDirections.actionGame2DFragmentToTournamentDetailsFragment())
+            } else {
+                findNavController().navigate(Game2DFragmentDirections.actionGame2DFragmentToMainFragment())
+            }
         }
 
         gameViewModel.startGame()

@@ -3,7 +3,7 @@ package com.example.kolkoikrzyzyk.viewModels
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.Transformations
-import com.example.kolkoikrzyzyk.UserRepository
+import com.example.kolkoikrzyzyk.repositories.UserRepository
 import com.example.kolkoikrzyzyk.database.AppDatabase
 
 class RankingViewModel(application: Application) : AndroidViewModel(application) {
