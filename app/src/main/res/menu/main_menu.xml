@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group>
+        <item
+            android:id="@+id/gameHistoryFragment"
+            android:title="Games history" />
+        <item
+            android:id="@+id/rankingFragment"
+            android:title="Ranking" />
+        <item
+            android:id="@+id/singleGameSettingsFragment"
+            android:title="Single game" />
+        <item
+            android:id="@+id/tournamentSettingsFragment"
+            android:title="Tournament" />
+    </group>
+    <group>
+    <item
+        android:id="@+id/registerFragment"
+        android:title="Register" />
+    <item
+        android:id="@+id/loginFragment"
+        android:title="Login" />
+    </group>
+</menu>

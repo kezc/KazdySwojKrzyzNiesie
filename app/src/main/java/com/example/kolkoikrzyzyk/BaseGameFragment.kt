@@ -25,11 +25,11 @@ abstract class BaseGameFragment : Fragment() {
     protected val gameViewModel: GameViewModel by viewModels()
     private var startingClick = true
     var timerHandler: Handler? = null
-    var timePassed = 0
+    var timePassed = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        (activity as AppCompatActivity?)!!.supportActionBar!!.hide()
+        activity?.actionBar?.hide()
     }
 
     override fun onCreateView(
@@ -76,7 +76,16 @@ abstract class BaseGameFragment : Fragment() {
             currentPlayerImageView.setImageResource(image)
             currentPlayerText.text = name
         }
+    }
 
+    override fun onResume() {
+        super.onResume()
+        (activity as AppCompatActivity?)!!.supportActionBar!!.hide()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        (activity as AppCompatActivity?)!!.supportActionBar!!.show()
     }
 
     abstract fun enableButtons()

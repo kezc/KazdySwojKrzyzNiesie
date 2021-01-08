@@ -1,8 +1,9 @@
-package com.example.kolkoikrzyzyk
+package com.example.kolkoikrzyzyk.viewModels
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.kolkoikrzyzyk.Event
 import com.example.kolkoikrzyzyk.model.User
 
 class SingleGameSettingsViewModel : ViewModel() {
@@ -44,7 +45,7 @@ class SingleGameSettingsViewModel : ViewModel() {
     }
 
     private fun checkIfBothPlayersSelected(){
-        if (_crossPlayer.value == null && _noughtPlayer.value == null) {
+        if (_crossPlayer.value == null || _noughtPlayer.value == null) {
             _selectError.value = "You need to select two users"
         } else {
             _selectError.value = ""

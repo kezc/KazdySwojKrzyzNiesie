@@ -13,6 +13,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import com.example.kolkoikrzyzyk.model.User
 import com.example.kolkoikrzyzyk.model.game.PlayerType
+import com.example.kolkoikrzyzyk.viewModels.SingleGameSettingsViewModel
 import com.example.kolkoikrzyzyk.viewModels.UsersViewModel
 import kotlinx.android.synthetic.main.fragment_single_game_settings.*
 
