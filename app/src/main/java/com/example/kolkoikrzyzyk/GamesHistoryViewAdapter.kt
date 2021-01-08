@@ -5,16 +5,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kolkoikrzyzyk.model.User
-import kotlinx.android.synthetic.main.ranking_card.view.*
+import kotlinx.android.synthetic.main.result_card.view.*
 
-class RankingViewAdapter() : RecyclerView.Adapter<RankingViewAdapter.ViewHolder>() {
-    private var values: List<User> = listOf()
+class GamesHistoryViewAdapter() : RecyclerView.Adapter<GamesHistoryViewAdapter.ViewHolder>() {
+    private var values: List<List<String>> = listOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
         return ViewHolder(
             LayoutInflater.from(parent.context).inflate(
-                R.layout.ranking_card,
+                R.layout.result_card,
                 parent,
                 false
             )
@@ -23,23 +23,22 @@ class RankingViewAdapter() : RecyclerView.Adapter<RankingViewAdapter.ViewHolder>
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = values[position]
-        holder.bind(item)
+        holder.bind(item[0], item[1], item[2])
     }
 
     override fun getItemCount(): Int = values.size
 
-    fun submitList(list: List<User>) {
+    fun submitList(list: List<List<String>>) {
         values = list
         notifyDataSetChanged()
     }
 
     inner class ViewHolder(private val view: View) :
         RecyclerView.ViewHolder(view) {
-        fun bind(user: User) {
-            view.name.text = user.name
-            view.player2.text = user.wonGames.toString()
-            view.result.text = user.drawnGames.toString()
-            view.lost.text = user.lostGames.toString()
+        fun bind(name1: String, name2: String, result: String) {
+            view.player1.text = name1
+            view.player2.text = name2
+            view.result.text = result
         }
     }
 

@@ -1,6 +1,7 @@
 package com.example.kolkoikrzyzyk.viewModels
 
 import android.app.Application
+import android.os.Environment
 import androidx.lifecycle.*
 import com.example.kolkoikrzyzyk.MainActivity
 import com.example.kolkoikrzyzyk.UserRepository
@@ -10,6 +11,7 @@ import com.example.kolkoikrzyzyk.model.game.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.io.File
 import java.util.concurrent.Callable
 import java.util.concurrent.Executors
 import java.util.concurrent.Future
@@ -116,6 +118,7 @@ class GameViewModel(application: Application) : AndroidViewModel(application) {
     private fun onGameEnd(gameResult: GameResult) =
         viewModelScope.launch {
             withContext(Dispatchers.Main) {
+                saveResult(gameResult)
                 if (gameResult is GameResult.Over) {
                     if (gameResult.winner == PlayerType.Cross) {
                         if (crossUser.name != "Computer") {
@@ -149,4 +152,19 @@ class GameViewModel(application: Application) : AndroidViewModel(application) {
                 }
             }
         }
+
+    private fun saveResult(gameResult: GameResult){
+        thread {
+            val file = File(getApplication<Application>().filesDir, "results.txt")
+            val result = when (gameResult) {
+                is GameResult.Over -> {
+                    if (gameResult.winner == PlayerType.Cross) crossUser.name + " won"
+                    else noughtUser.name + " won"
+                }
+                GameResult.Draw -> "draw"
+                GameResult.Pending -> ""
+            }
+            file.appendText("${noughtUser.name},${crossUser.name},$result\n")
+        }
+    }
 }

@@ -33,6 +33,12 @@ class MainFragment : Fragment() {
         button.setOnClickListener {
             findNavController().navigate(MainFragmentDirections.actionMainFragmentToRankingFragment())
         }
+        button2.setOnClickListener {
+            findNavController().navigate(MainFragmentDirections.actionMainFragmentToTournamentSettingsFragment())
+        }
+        button3.setOnClickListener {
+            findNavController().navigate(MainFragmentDirections.actionMainFragmentToGameHistoryFragment())
+        }
         val adapter = UsersViewAdapter { user ->
             usersViewModel.logout(user)
         }
