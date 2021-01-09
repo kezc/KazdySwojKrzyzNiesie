@@ -1,6 +1,5 @@
 package com.example.kolkoikrzyzyk
 
-import android.app.Application
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -33,21 +32,22 @@ class GameHistoryFragment : Fragment() {
             val lines = withContext(Dispatchers.IO) {
                 try {
                     val file = File(requireContext().filesDir, "results.txt")
+                    historyList.visibility = View.VISIBLE
                     file.readLines().map { it.split(",") }.reversed()
                 } catch (e: Exception) {
                     historyList.visibility = View.INVISIBLE
                     listOf()
                 }
             }
+            adapter.submitList(lines)
+
             Log.d("GameHistoryFragment", lines.toString())
             if (lines.isEmpty()) {
                 noResults.visibility = View.VISIBLE
             } else {
                 noResults.visibility = View.INVISIBLE
             }
-            withContext(Dispatchers.Main) {
-                adapter.submitList(lines)
-            }
+            progressBar.visibility = View.INVISIBLE
         }
     }
 }

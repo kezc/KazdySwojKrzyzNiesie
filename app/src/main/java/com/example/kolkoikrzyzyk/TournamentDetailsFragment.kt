@@ -2,10 +2,10 @@ package com.example.kolkoikrzyzyk
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -14,7 +14,7 @@ import com.example.kolkoikrzyzyk.viewModels.TournamentViewModel
 import com.example.kolkoikrzyzyk.viewModels.UsersViewModel
 import kotlinx.android.synthetic.main.fragment_tournament_details.*
 import kotlinx.android.synthetic.main.result_card.player1
-import kotlinx.android.synthetic.main.result_card.player2
+import kotlinx.android.synthetic.main.result_card.wins
 
 
 class TournamentDetailsFragment : Fragment() {
@@ -48,7 +48,7 @@ class TournamentDetailsFragment : Fragment() {
                 user1 = pair.first
                 user2 = pair.second
                 player1.text = pair.first.name
-                player2.text = pair.second.name
+                wins.text = pair.second.name
             }
             checkIfUsersLoggedIn()
         }
@@ -57,7 +57,7 @@ class TournamentDetailsFragment : Fragment() {
             if (it) {
                 nextMatchText.text = "Tournament is over"
                 player1.visibility = View.GONE
-                player2.visibility = View.GONE
+                wins.visibility = View.GONE
                 playButton.visibility = View.GONE
             }
         }
@@ -123,7 +123,7 @@ class TournamentDetailsFragment : Fragment() {
             }
         } else {
             player1.text = ""
-            player2.text = ""
+            wins.text = ""
         }
     }
 

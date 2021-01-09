@@ -26,31 +26,24 @@ class SingleGameSettingsViewModel : ViewModel() {
 
     fun setNoughtPlayer(user: User) {
         _noughtPlayer.value = user
-        checkIfPlayerCheckedTwice()
-        checkIfBothPlayersSelected()
+        checkIfPlayerSelectedCorrectly()
     }
 
     fun setCrossPlayer(user: User) {
         _crossPlayer.value = user
-        checkIfPlayerCheckedTwice()
-        checkIfBothPlayersSelected()
+        checkIfPlayerSelectedCorrectly()
     }
 
-    private fun checkIfPlayerCheckedTwice() {
-        if (_noughtPlayer.value == _crossPlayer.value) {
+    private fun checkIfPlayerSelectedCorrectly() {
+        if (_crossPlayer.value == null || _noughtPlayer.value == null) {
+            _selectError.value = "You need to select two users"
+        } else if (_noughtPlayer.value == _crossPlayer.value) {
             _selectError.value = "Same user selected twice"
         } else {
             _selectError.value = ""
         }
     }
 
-    private fun checkIfBothPlayersSelected(){
-        if (_crossPlayer.value == null || _noughtPlayer.value == null) {
-            _selectError.value = "You need to select two users"
-        } else {
-            _selectError.value = ""
-        }
-    }
 
     fun onPlay() {
         val noughtUser = _noughtPlayer.value

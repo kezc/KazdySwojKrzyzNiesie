@@ -54,13 +54,13 @@
                 android:layout_margin="4dp"
                 android:layout_marginTop="4dp"
                 android:text="Piotrek"
-                app:layout_constraintEnd_toStartOf="@+id/player2"
+                app:layout_constraintEnd_toStartOf="@+id/wins"
                 app:layout_constraintHorizontal_chainStyle="packed"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/nextMatchText" />
 
             <TextView
-                android:id="@+id/player2"
+                android:id="@+id/wins"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="4dp"

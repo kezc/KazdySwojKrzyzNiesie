@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.kolkoikrzyzyk.model.User
 import kotlinx.android.synthetic.main.ranking_card.view.*
 
-class RankingViewAdapter() : RecyclerView.Adapter<RankingViewAdapter.ViewHolder>() {
+class RankingViewAdapter : RecyclerView.Adapter<RankingViewAdapter.ViewHolder>() {
     private var values: List<User> = listOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -37,9 +37,9 @@ class RankingViewAdapter() : RecyclerView.Adapter<RankingViewAdapter.ViewHolder>
         RecyclerView.ViewHolder(view) {
         fun bind(user: User) {
             view.name.text = user.name
-            view.player2.text = user.wonGames.toString()
-            view.result.text = user.drawnGames.toString()
-            view.lost.text = user.lostGames.toString()
+            view.wins.text = user.wonGames.toString()
+            view.draws.text = user.drawnGames.toString()
+            view.loses.text = user.lostGames.toString()
         }
     }
 

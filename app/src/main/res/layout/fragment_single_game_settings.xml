@@ -21,14 +21,14 @@
         card_view:cardElevation="2dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:padding="16dp"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:padding="16dp">
 
             <TextView
-                android:layout_margin="4dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_margin="4dp"
                 android:text="Options"
                 android:textSize="32sp"
                 app:layout_constraintBottom_toTopOf="@+id/header"
@@ -37,59 +37,56 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <Button
+                android:layout_marginTop="16dp"
                 android:id="@+id/selectPlayerNought"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Select Player O"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/selectPlayerCross"
-                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintHorizontal_chainStyle="spread"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@id/sizeRadioGroup" />
 
             <Button
+                android:layout_marginTop="16dp"
                 android:id="@+id/selectPlayerCross"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Select Player X"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/selectPlayerNought"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@+id/sizeRadioGroup" />
 
             <TextView
+                android:layout_marginTop="8dp"
                 android:id="@+id/errorMessage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="Error msg"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/selectPlayerNought" />
+                app:layout_constraintTop_toBottomOf="@+id/selectPlayerNought"
+                tools:text="Error msg" />
 
             <Button
                 android:id="@+id/createTournamentButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Play"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/errorMessage" />
 
             <com.google.android.material.switchmaterial.SwitchMaterial
-                android:textColor="@color/white"
-                android:theme="@style/Switch"
                 android:id="@+id/switch3D"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="is 3D"
+                android:textColor="@color/white"
+                android:theme="@style/Switch"
                 app:layout_constraintBottom_toBottomOf="@+id/sizeRadioGroup"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/sizeRadioGroup"
-                app:layout_constraintTop_toTopOf="@+id/sizeRadioGroup"
-               />
+                app:layout_constraintTop_toTopOf="@+id/sizeRadioGroup" />
 
             <TextView
                 android:id="@+id/header"
@@ -111,21 +108,21 @@
                 app:layout_constraintStart_toStartOf="parent">
 
                 <RadioButton
-                    android:checked="true"
-                    android:buttonTint="@color/white"
-                    android:textColor="@color/white"
                     android:id="@+id/radioButtonSize3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="3x3" />
+                    android:buttonTint="@color/white"
+                    android:checked="true"
+                    android:text="3x3"
+                    android:textColor="@color/white" />
 
                 <RadioButton
-                    android:buttonTint="@color/white"
-                    android:textColor="@color/white"
                     android:id="@+id/radioButtonSize4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="4x4" />
+                    android:buttonTint="@color/white"
+                    android:text="4x4"
+                    android:textColor="@color/white" />
             </RadioGroup>
 
         </androidx.constraintlayout.widget.ConstraintLayout>

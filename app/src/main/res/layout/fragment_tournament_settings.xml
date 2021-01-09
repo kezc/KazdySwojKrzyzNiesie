@@ -48,11 +48,12 @@
                 app:layout_constraintTop_toBottomOf="@+id/nameEditText" />
 
             <EditText
-                android:layout_margin="4dp"
                 android:id="@+id/nameEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="4dp"
                 android:hint="Name"
+                android:textColor="@color/white"
                 app:layout_constraintBottom_toTopOf="@+id/playerListButton"
                 app:layout_constraintTop_toBottomOf="@+id/sizeRadioGroup"
                 tools:layout_editor_absoluteX="16dp" />

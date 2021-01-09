@@ -23,7 +23,7 @@
             tools:text="wojtek" />
 
         <TextView
-            android:id="@+id/player2"
+            android:id="@+id/wins"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="@+id/player2Hint"
@@ -33,11 +33,9 @@
 
 
         <TextView
-            android:id="@+id/result"
+            android:id="@+id/draws"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
-            android:layout_marginTop="4dp"
             app:layout_constraintEnd_toEndOf="@+id/resultHint"
             app:layout_constraintStart_toStartOf="@+id/resultHint"
             app:layout_constraintTop_toTopOf="parent"
@@ -63,7 +61,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/resultHint"
             app:layout_constraintStart_toEndOf="@+id/player1Hint"
-            app:layout_constraintTop_toBottomOf="@+id/player2" />
+            app:layout_constraintTop_toBottomOf="@+id/wins" />
 
         <TextView
             android:id="@+id/resultHint"
@@ -74,7 +72,7 @@
             app:layout_constraintStart_toEndOf="@id/player2Hint"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/result" />
+            app:layout_constraintTop_toBottomOf="@+id/draws" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

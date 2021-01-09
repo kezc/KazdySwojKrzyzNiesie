@@ -1,20 +1,15 @@
 package com.example.kolkoikrzyzyk
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kolkoikrzyzyk.viewModels.UsersViewModel
-import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.fragment_main.*
 
 class MainFragment : Fragment() {
@@ -25,23 +20,23 @@ class MainFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_main, container, false)
-        view.setOnClickListener {
-            findNavController().navigate(MainFragmentDirections.actionMainFragmentToSingleGameSettingsFragment())
-        }
-        return view
+
+        return inflater.inflate(R.layout.fragment_main, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        button.setOnClickListener {
+        singleGameButton.setOnClickListener {
+            findNavController().navigate(MainFragmentDirections.actionMainFragmentToSingleGameSettingsFragment())
+        }
+        rankingButton.setOnClickListener {
             findNavController().navigate(MainFragmentDirections.actionMainFragmentToRankingFragment())
         }
-        button2.setOnClickListener {
+        tournamentButton.setOnClickListener {
             findNavController().navigate(MainFragmentDirections.actionMainFragmentToTournamentSettingsFragment())
         }
-        button3.setOnClickListener {
+        historyButton.setOnClickListener {
             findNavController().navigate(MainFragmentDirections.actionMainFragmentToGameHistoryFragment())
         }
         val adapter = UsersViewAdapter { user ->

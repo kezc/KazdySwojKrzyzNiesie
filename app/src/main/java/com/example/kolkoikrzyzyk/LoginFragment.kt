@@ -1,8 +1,6 @@
 package com.example.kolkoikrzyzyk
 
-import android.content.Context
 import android.os.Bundle
-import android.text.Editable
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -11,9 +9,7 @@ import android.view.inputmethod.InputMethodManager
 import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.NavArgs
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.kolkoikrzyzyk.viewModels.UsersViewModel
 import kotlinx.android.synthetic.main.fragment_login.*
@@ -55,15 +51,13 @@ class LoginFragment : Fragment() {
         }
 
         viewModel.loginSuccessful.observe(viewLifecycleOwner) { event ->
-            Log.d(TAG, "${event.hasBeenHandled} ${event.peekContent()}")
-
-
+            val imm = getSystemService(requireContext(), InputMethodManager::class.java)
+            imm?.hideSoftInputFromWindow(view.windowToken, 0)
             event.getContentIfNotHandled()?.let {
                 if (it) {
                     nameEditText.setText("")
                     passwordEditText.setText("")
-                    val imm = getSystemService(requireContext(), InputMethodManager::class.java)
-                    imm?.hideSoftInputFromWindow(view.windowToken, 0)
+
 
                     view.findNavController().navigate(
                         LoginFragmentDirections.actionLoginFragmentToMainFragment()

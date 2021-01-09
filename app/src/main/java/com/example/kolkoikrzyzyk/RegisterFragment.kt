@@ -2,12 +2,12 @@ package com.example.kolkoikrzyzyk
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
-import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.getSystemService
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
 import com.example.kolkoikrzyzyk.viewModels.UsersViewModel
@@ -36,14 +36,11 @@ class RegisterFragment : Fragment() {
 
         viewModel.operationSuccessful.observe(viewLifecycleOwner) { event ->
             event.getContentIfNotHandled()?.let {
+                val imm = getSystemService(requireContext(), InputMethodManager::class.java)
+                imm?.hideSoftInputFromWindow(view.windowToken, 0)
                 if (it) {
                     nameEditText.setText("")
                     passwordEditText.setText("")
-                    val imm = ContextCompat.getSystemService(
-                        requireContext(),
-                        InputMethodManager::class.java
-                    )
-                    imm?.hideSoftInputFromWindow(view.windowToken, 0)
                     view.findNavController().navigate(
                         RegisterFragmentDirections.actionRegisterFragmentToMainFragment()
                     )
@@ -52,7 +49,6 @@ class RegisterFragment : Fragment() {
                 }
             }
         }
-
         confirmButton.setOnClickListener {
             val name = nameEditText.text.toString()
             val password = passwordEditText.text.toString()

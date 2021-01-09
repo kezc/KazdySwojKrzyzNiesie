@@ -4,9 +4,9 @@ import android.app.Application
 import android.util.Log
 import androidx.lifecycle.*
 import com.example.kolkoikrzyzyk.Event
-import com.example.kolkoikrzyzyk.repositories.UserRepository
 import com.example.kolkoikrzyzyk.database.AppDatabase
 import com.example.kolkoikrzyzyk.model.User
+import com.example.kolkoikrzyzyk.repositories.UserRepository
 import kotlinx.coroutines.*
 
 class UsersViewModel(application: Application) : AndroidViewModel(application) {
@@ -55,6 +55,7 @@ class UsersViewModel(application: Application) : AndroidViewModel(application) {
 //            addUser(User(id, name, password))
             _operationSuccessful.value = Event(true)
         } else {
+            message = "There is user with this username"
             _operationSuccessful.value = Event(false)
         }
     }
