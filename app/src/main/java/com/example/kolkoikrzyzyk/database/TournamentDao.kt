@@ -9,9 +9,6 @@ interface TournamentDao {
     @Query("SELECT * FROM TOURNAMENT_USER WHERE tournament_id = :id")
     suspend fun findUsersByTournament(id: Long): List<TournamentUser>?
 
-    @Query("SELECT * FROM TOURNAMENT_RESULT WHERE tournament_id = :id")
-    suspend fun findResultsByTournament(id: Long): List<TournamentResult>?
-
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(tournament: Tournament): Long
 
@@ -25,7 +22,7 @@ interface TournamentDao {
     suspend fun update(tournament: Tournament)
 
     @Query("SELECT * FROM tournament")
-    suspend fun getAllTournaments(): List<Tournament>
+    fun getAllTournaments(): LiveData<List<Tournament>>
 
     @Query("SELECT * FROM tournament WHERE name = :name LIMIT 1")
     suspend fun getTournamentByName(name: String): Tournament?
@@ -36,6 +33,9 @@ interface TournamentDao {
     @Query("SELECT COUNT(*) FROM TOURNAMENT_RESULT WHERE tournament_id = :id")
     fun getMatchesCount(id: Long): LiveData<Int>
 
+    @Query("SELECT COUNT(*) FROM TOURNAMENT_RESULT WHERE tournament_id = :id")
+    fun getCurrentTournamentMatchesCountById(id: Long): Int
+
     @Query("SELECT * FROM TOURNAMENT_RESULT WHERE tournament_id = :id")
-    fun getMatches(id: Long): LiveData<List<TournamentResult>>
+    fun getTournamentMatchesById(id: Long): LiveData<List<TournamentResult>>
 }

@@ -9,9 +9,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import com.example.kolkoikrzyzyk.database.Tournament
 import com.example.kolkoikrzyzyk.model.User
 import com.example.kolkoikrzyzyk.model.game.PlayerType
 import com.example.kolkoikrzyzyk.viewModels.TournamentViewModel
@@ -25,7 +25,7 @@ class TournamentSettingsFragment : Fragment() {
     private val usersViewModel: UsersViewModel by activityViewModels()
     private val tournamentViewModel: TournamentViewModel by activityViewModels()
     private var users = listOf<User>()
-
+    private var allTournaments = listOf<Tournament>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,11 +37,14 @@ class TournamentSettingsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        tournamentViewModel.players.clear()
+
         usersViewModel.users.observe(viewLifecycleOwner) {
             users = it.toList()
         }
         playerListButton.setOnClickListener {
-            dialog()
+            choosePlayers()
         }
         createTournamentButton.setOnClickListener {
             if (tournamentViewModel.players.size < 2) {
@@ -51,6 +54,19 @@ class TournamentSettingsFragment : Fragment() {
                 tournamentViewModel.tournamentName = nameEditText.text.toString()
                 tournamentViewModel.createTournament()
 
+            }
+        }
+
+        tournamentViewModel.tournaments.observe(viewLifecycleOwner) {
+            allTournaments = it
+            allTournamentsProgressBar.visibility = View.INVISIBLE
+            loadTournamentButton.visibility = View.VISIBLE
+            if (it.isNotEmpty()) {
+                loadTournamentButton.text = "Load tournament"
+                loadTournamentButton.isEnabled = true
+            } else {
+                loadTournamentButton.text = "No tournaments to load"
+                loadTournamentButton.isEnabled = false
             }
         }
 
@@ -74,9 +90,11 @@ class TournamentSettingsFragment : Fragment() {
             }
         }
         switch3D.setOnCheckedChangeListener { _, isChecked -> tournamentViewModel.is3d = isChecked }
+
+        loadTournamentButton.setOnClickListener {selectTournamentDialog()}
     }
 
-    private fun dialog() {
+    private fun choosePlayers() {
         val textView = TextView(context).apply {
             text = "Select players"
             setPadding(20, 30, 20, 30)
@@ -100,6 +118,31 @@ class TournamentSettingsFragment : Fragment() {
                     tournamentViewModel.addPlayer(users[id])
                 else
                     tournamentViewModel.removePlayer(users[id])
+            }
+        }
+        val alert = builder.create()
+        alert.show()
+    }
+
+    private fun selectTournamentDialog() {
+        val textView = TextView(context).apply {
+            text = "Select the tournament"
+            setPadding(20, 30, 20, 30)
+            textSize = 20f
+            setTextColor(Color.BLACK)
+        }
+
+        val tournamentsNames = allTournaments.map { it.name }.toTypedArray()
+        val builder = AlertDialog.Builder(
+            requireContext(),
+            R.style.Base_ThemeOverlay_MaterialComponents_Dialog_Alert
+        ).apply {
+            setCustomTitle(textView)
+            setSingleChoiceItems(
+                tournamentsNames, -1
+            ) { dialog, item ->
+                tournamentViewModel.loadTournament(tournamentsNames[item])
+                dialog.dismiss()
             }
         }
         val alert = builder.create()

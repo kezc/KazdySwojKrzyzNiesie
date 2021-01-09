@@ -17,5 +17,5 @@ data class Tournament(
     val name: String,
     @ColumnInfo(name = "is_3d") val is3D: Boolean,
     val size: Int,
-    val isOver: Boolean = false
+    var isOver: Boolean = false
 )

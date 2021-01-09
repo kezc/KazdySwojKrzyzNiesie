@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.kolkoikrzyzyk.model.game.GameResult
@@ -41,18 +42,19 @@ class Game3DFragment : BaseGameFragment() {
         })
 
         endGameButton.setOnClickListener {
-            if (isTournament) {
-                findNavController().navigate(Game3DFragmentDirections.actionGame3DFragmentToTournamentDetailsFragment())
-            } else {
-                findNavController().navigate(Game3DFragmentDirections.actionGame3DFragmentToMainFragment())
-            }
+//            if (isTournament) {
+//                findNavController().navigate(Game3DFragmentDirections.actionGame3DFragmentToTournamentDetailsFragment())
+//            } else {
+//                findNavController().navigate(Game3DFragmentDirections.actionGame3DFragmentToMainFragment())
+//            }
+            findNavController().popBackStack()
         }
 
         gameViewModel.startGame()
     }
 
     private fun createBoard(size: Int) {
-        val buttonSize = (if (size == 4) 36f else 64f).dpToPixels(resources).roundToInt()
+        val buttonSize = (if (size == 4) 48f else 64f).dpToPixels(resources).roundToInt()
         val tempButtons = mutableListOf<List<List<ImageButton>>>()
 
         for (z in 0 until size) {

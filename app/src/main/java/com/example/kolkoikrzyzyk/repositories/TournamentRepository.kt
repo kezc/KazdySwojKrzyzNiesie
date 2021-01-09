@@ -43,9 +43,15 @@ class TournamentRepository(private val tournamentDao: TournamentDao) {
 
     suspend fun getTournamentByName(name: String) = tournamentDao.getTournamentByName(name)
 
-    suspend fun getAllTournaments() = tournamentDao.getAllTournaments()
+    fun getAllTournaments() = tournamentDao.getAllTournaments()
 
     fun getTournamentMatchesCount(tournament: Tournament) = tournamentDao.getMatchesCount(tournament.id)
 
-    fun getTournamentMatches(tournament: Tournament) = tournamentDao.getMatches(tournament.id)
+    fun getCurrentTournamentMatchesCount(tournament: Tournament) = tournamentDao.getCurrentTournamentMatchesCountById(tournament.id)
+
+    fun getTournamentMatches(tournament: Tournament) = tournamentDao.getTournamentMatchesById(tournament.id)
+
+    suspend fun endTournament(tournament: Tournament) = tournamentDao.update(tournament.apply { isOver = true })
+
+    suspend fun getTournamentPlayers(tournament: Tournament) = tournamentDao.findUsersByTournament(tournament.id)
 }

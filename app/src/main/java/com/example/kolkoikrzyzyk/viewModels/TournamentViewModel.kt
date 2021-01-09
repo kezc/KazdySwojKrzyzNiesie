@@ -10,9 +10,7 @@ import com.example.kolkoikrzyzyk.model.User
 import com.example.kolkoikrzyzyk.model.game.GameResult
 import com.example.kolkoikrzyzyk.repositories.TournamentRepository
 import com.example.kolkoikrzyzyk.repositories.UserRepository
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 
 class TournamentViewModel(application: Application) : AndroidViewModel(application) {
     var is3d = false
@@ -20,10 +18,10 @@ class TournamentViewModel(application: Application) : AndroidViewModel(applicati
     private val userRepository = UserRepository(AppDatabase.getInstance(application).userDao())
     private val tournamentRepository =
         TournamentRepository(AppDatabase.getInstance(application).tournamentDao())
-    val players = mutableListOf<User>()
+    var players = mutableListOf<User>()
     var tournamentName: String = ""
     var tournament: Tournament? = null
-    var tournaments = listOf<Tournament>()
+    var tournaments = tournamentRepository.getAllTournaments()
     private val _nameOccupied = MutableLiveData<Event<Boolean>>()
     val nameOccupied: LiveData<Event<Boolean>>
         get() = _nameOccupied
@@ -103,13 +101,29 @@ class TournamentViewModel(application: Application) : AndroidViewModel(applicati
                         noughtPlayer,
                         result
                     )
+                    val totalMatches = players.size * (players.size - 1) / 2
+                    if (tournamentRepository.getCurrentTournamentMatchesCount(it) == totalMatches) {
+                        tournamentRepository.endTournament(it)
+                        it.isOver = true
+                    }
                 }
             }
         }
 
-    fun getAllTournaments() = viewModelScope.launch {
+    fun loadTournament(name: String) = viewModelScope.launch {
+        tournamentName = name
         withContext(Dispatchers.IO) {
-            tournaments = tournamentRepository.getAllTournaments()
+            tournament = tournamentRepository.getTournamentByName(name)
+            tournament?.let {
+                is3d = it.is3D
+                gameSize = it.size
+                players = tournamentRepository.getTournamentPlayers(it)?.map { tournamentUser ->
+                    async {
+                        userRepository.getUserById(tournamentUser.uid)?.toUser()
+                    }
+                }?.awaitAll()?.filterNotNull()?.toMutableList() ?: mutableListOf()
+            }
         }
+        _tournamentCreated.value = Event(Unit)
     }
 }

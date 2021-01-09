@@ -11,8 +11,10 @@ import android.view.inputmethod.InputMethodManager
 import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.NavArgs
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.example.kolkoikrzyzyk.viewModels.UsersViewModel
 import kotlinx.android.synthetic.main.fragment_login.*
 
@@ -21,6 +23,8 @@ class LoginFragment : Fragment() {
     private val TAG = "LoginFragment"
 
     private val viewModel: UsersViewModel by activityViewModels()
+
+    private val args: LoginFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,6 +35,11 @@ class LoginFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        args.userName?.let{
+            nameEditText.setText(it)
+        }
+
         registerButton.setOnClickListener {
             view.findNavController().navigate(
                 LoginFragmentDirections.actionLoginFragmentToRegisterFragment()

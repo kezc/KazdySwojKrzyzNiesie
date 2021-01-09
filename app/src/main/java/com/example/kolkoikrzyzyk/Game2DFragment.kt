@@ -38,28 +38,22 @@ class Game2DFragment : BaseGameFragment() {
         })
 
         endGameButton.setOnClickListener {
-            if (isTournament) {
-                findNavController().navigate(Game2DFragmentDirections.actionGame2DFragmentToTournamentDetailsFragment())
-            } else {
-                findNavController().navigate(Game2DFragmentDirections.actionGame2DFragmentToMainFragment())
-            }
+//            if (isTournament) {
+//                findNavController().navigate(Game2DFragmentDirections.actionGame2DFragmentToTournamentDetailsFragment())
+//            } else {
+//                findNavController().navigate(Game2DFragmentDirections.actionGame2DFragmentToMainFragment())
+//            }
+            findNavController().popBackStack()
         }
 
         gameViewModel.startGame()
     }
 
     override fun onDraw() {
-        Toast.makeText(requireContext(), "REMIS", Toast.LENGTH_LONG)
-            .show()
         disableButtons()
     }
 
     override fun onWin(result: GameResult.Over) {
-        Toast.makeText(
-            requireContext(),
-            "WYGRAL ${result.winner}",
-            Toast.LENGTH_LONG
-        ).show()
         disableButtons()
         result.winningFields.forEach { field ->
             onWinAnimation(buttons[field.y][field.x], field)

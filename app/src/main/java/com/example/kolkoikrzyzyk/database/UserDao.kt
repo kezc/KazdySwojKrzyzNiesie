@@ -9,6 +9,9 @@ interface UserDao {
     @Query("SELECT * FROM user WHERE name = :name LIMIT 1")
     suspend fun findByName(name: String): DbUser?
 
+    @Query("SELECT * FROM user WHERE uid = :uid LIMIT 1")
+    suspend fun findById(uid: Long): DbUser?
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(user: DbUser): Long
 

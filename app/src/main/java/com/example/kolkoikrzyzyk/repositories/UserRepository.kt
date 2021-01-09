@@ -48,4 +48,6 @@ class UserRepository(private val userDao: UserDao) {
         Transformations.map(userDao.getLoggedUsers()) {
             it.map { dbUser -> dbUser.toUser() }.toMutableSet()
         }
+
+    suspend fun getUserById(uid: Long) = userDao.findById(uid)
 }

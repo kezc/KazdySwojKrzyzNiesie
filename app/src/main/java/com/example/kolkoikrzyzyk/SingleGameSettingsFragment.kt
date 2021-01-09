@@ -75,10 +75,10 @@ class SingleGameSettingsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         selectPlayerNought.setOnClickListener {
-            dialog(PlayerType.Nought)
+            choosePlayer(PlayerType.Nought)
         }
         selectPlayerCross.setOnClickListener {
-            dialog(PlayerType.Cross)
+            choosePlayer(PlayerType.Cross)
         }
         createTournamentButton.setOnClickListener {
             singleGameSettingsViewModel.onPlay()
@@ -93,7 +93,7 @@ class SingleGameSettingsFragment : Fragment() {
         switch3D.setOnCheckedChangeListener { _, isChecked -> singleGameSettingsViewModel.is3d = isChecked }
     }
 
-    fun dialog(player: PlayerType) {
+    fun choosePlayer(player: PlayerType) {
         val textView = TextView(context).apply {
             text = "Select an option"
             setPadding(20, 30, 20, 30)

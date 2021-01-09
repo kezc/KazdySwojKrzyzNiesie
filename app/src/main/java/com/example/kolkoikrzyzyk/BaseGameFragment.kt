@@ -51,7 +51,11 @@ abstract class BaseGameFragment : Fragment() {
                         )
                     }
                     onWin(result)
-                    endGameButton.text = "${result.winner.name} has won"
+                    val winnerName = when(result.winner) {
+                        PlayerType.Nought -> gameViewModel.noughtUser
+                        PlayerType.Cross -> gameViewModel.crossUser
+                    }.name
+                    endGameButton.text = "$winnerName has won"
                     endGameButton.visibility = View.VISIBLE
                     timerHandler?.removeCallbacksAndMessages(null)
                     timerHandler = null
@@ -87,18 +91,8 @@ abstract class BaseGameFragment : Fragment() {
             val name =
                 if (it == PlayerType.Cross) gameViewModel.crossUser.name else gameViewModel.noughtUser.name
             currentPlayerImageView.setImageResource(image)
-            currentPlayerText.text = name
+            currentPlayerName.text = name
         }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        (activity as AppCompatActivity?)!!.supportActionBar!!.hide()
-    }
-
-    override fun onStop() {
-        super.onStop()
-        (activity as AppCompatActivity?)!!.supportActionBar!!.show()
     }
 
     abstract fun enableButtons()
