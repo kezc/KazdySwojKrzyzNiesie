@@ -44,7 +44,7 @@ class UsersViewModel(application: Application) : AndroidViewModel(application) {
 
     fun register(name: String, password: String) = viewModelScope.launch {
         if (name.isBlank() || password.isBlank()) {
-            message = "Fields cannot be empty"
+            message = "Pola nie mogą zostać puste"
             _operationSuccessful.value = Event(false)
             return@launch
         }
@@ -55,7 +55,7 @@ class UsersViewModel(application: Application) : AndroidViewModel(application) {
 //            addUser(User(id, name, password))
             _operationSuccessful.value = Event(true)
         } else {
-            message = "There is user with this username"
+            message = "Login jest zajęty"
             _operationSuccessful.value = Event(false)
         }
     }

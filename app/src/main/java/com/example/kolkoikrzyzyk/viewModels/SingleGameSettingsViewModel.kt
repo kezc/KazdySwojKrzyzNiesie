@@ -13,7 +13,7 @@ class SingleGameSettingsViewModel : ViewModel() {
     private val _crossPlayer = MutableLiveData<User?>()
     val crossPlayer: LiveData<User?>
         get() = _crossPlayer
-    private val _selectError = MutableLiveData("You need to select two users")
+    private val _selectError = MutableLiveData("Musisz wybrać graczy")
     val selectError: LiveData<String>
         get() = _selectError
 
@@ -36,9 +36,9 @@ class SingleGameSettingsViewModel : ViewModel() {
 
     private fun checkIfPlayerSelectedCorrectly() {
         if (_crossPlayer.value == null || _noughtPlayer.value == null) {
-            _selectError.value = "You need to select two users"
+            _selectError.value = "Musisz wybrać graczy"
         } else if (_noughtPlayer.value == _crossPlayer.value) {
-            _selectError.value = "Same user selected twice"
+            _selectError.value = "Gracz wybrany dwukrotnie"
         } else {
             _selectError.value = ""
         }

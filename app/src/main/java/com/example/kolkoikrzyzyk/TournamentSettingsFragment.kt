@@ -91,7 +91,7 @@ class TournamentSettingsFragment : Fragment() {
 
     private fun choosePlayers() {
         val textView = TextView(context).apply {
-            text = "Select players"
+            text = "Wybierz graczy"
             setPadding(20, 30, 20, 30)
             textSize = 20f
             setTextColor(Color.BLACK)
@@ -105,7 +105,7 @@ class TournamentSettingsFragment : Fragment() {
             R.style.Base_ThemeOverlay_MaterialComponents_Dialog_Alert
         ).apply {
             setCustomTitle(textView)
-            setNeutralButton("Confirm") { dialog, _ ->
+            setNeutralButton("OK") { dialog, _ ->
                 dialog.dismiss()
             }
             setMultiChoiceItems(
@@ -123,7 +123,7 @@ class TournamentSettingsFragment : Fragment() {
 
     private fun selectTournamentDialog() {
         val textView = TextView(context).apply {
-            text = "Select the tournament"
+            text = "Wybierz turniej"
             setPadding(20, 30, 20, 30)
             textSize = 20f
             setTextColor(Color.BLACK)

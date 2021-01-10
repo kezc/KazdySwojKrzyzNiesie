@@ -54,7 +54,7 @@ abstract class BaseGameFragment : Fragment() {
                         PlayerType.Nought -> gameViewModel.noughtUser
                         PlayerType.Cross -> gameViewModel.crossUser
                     }.name
-                    endGameButton.text = "$winnerName has won"
+                    endGameButton.text = "$winnerName wygrał"
                     endGameButton.visibility = View.VISIBLE
                     timerHandler?.removeCallbacksAndMessages(null)
                     timerHandler = null
@@ -68,7 +68,7 @@ abstract class BaseGameFragment : Fragment() {
                         )
                     }
                     onDraw()
-                    endGameButton.text = "DRAW"
+                    endGameButton.text = "Remis"
                     endGameButton.visibility = View.VISIBLE
                     timerHandler?.removeCallbacksAndMessages(null)
                     timerHandler = null

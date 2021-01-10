@@ -18,10 +18,10 @@
         app:layout_constraintBottom_toTopOf="@+id/textView2" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:background="#66000000"
         android:id="@+id/textView2"
         android:layout_width="match_parent"
         android:layout_height="64dp"
+        android:background="#66000000"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -31,18 +31,18 @@
             android:id="@+id/currentPlayerText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Current player: "
+            android:text="Aktualny gracz"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/currentPlayerName"
             app:layout_constraintStart_toStartOf="@+id/currentPlayerName"
             app:layout_constraintTop_toBottomOf="@+id/currentPlayerName" />
 
         <TextView
-            android:layout_marginTop="4dp"
             android:id="@+id/currentPlayerName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
+            android:layout_marginTop="4dp"
             android:textSize="24sp"
             app:layout_constraintEnd_toStartOf="@+id/currentPlayerImageView"
             app:layout_constraintStart_toStartOf="parent"
@@ -50,26 +50,36 @@
             tools:text="wojtekwojtek" />
 
         <ImageView
-            tools:src="@drawable/cross"
             android:id="@+id/currentPlayerImageView"
             android:layout_width="48dp"
             android:layout_height="48dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/cross" />
 
         <TextView
             android:id="@+id/timer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
             android:layout_marginEnd="16dp"
             android:text="00:00"
             android:textSize="24sp"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/currentPlayerImageView"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/timeHint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Czas"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/timer"
+            app:layout_constraintStart_toStartOf="@+id/timer"
+            app:layout_constraintTop_toBottomOf="@+id/currentPlayerName" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <LinearLayout

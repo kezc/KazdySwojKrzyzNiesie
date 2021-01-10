@@ -97,7 +97,7 @@ class SingleGameSettingsFragment : Fragment() {
 
     fun choosePlayer(player: PlayerType) {
         val textView = TextView(context).apply {
-            text = "Select an option"
+            text = "Wybierz gracza"
             setPadding(20, 30, 20, 30)
             textSize = 20f
             setTextColor(Color.BLACK)

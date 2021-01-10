@@ -3,23 +3,23 @@
     <group>
         <item
             android:id="@+id/gameHistoryFragment"
-            android:title="Games history" />
+            android:title="Historia gier" />
         <item
             android:id="@+id/rankingFragment"
             android:title="Ranking" />
         <item
             android:id="@+id/singleGameSettingsFragment"
-            android:title="Single game" />
+            android:title="Pojedyńcza gra" />
         <item
             android:id="@+id/tournamentSettingsFragment"
-            android:title="Tournament" />
+            android:title="Turniej" />
     </group>
     <group>
-    <item
-        android:id="@+id/registerFragment"
-        android:title="Register" />
-    <item
-        android:id="@+id/loginFragment"
-        android:title="Login" />
+        <item
+            android:id="@+id/registerFragment"
+            android:title="Rejestracja" />
+        <item
+            android:id="@+id/loginFragment"
+            android:title="Logowanie" />
     </group>
 </menu>
