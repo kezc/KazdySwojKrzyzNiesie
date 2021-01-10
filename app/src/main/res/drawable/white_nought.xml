@@ -10,7 +10,7 @@
             android:top="1dp">
             <stroke
                 android:width="2dp"
-                android:color="@color/secondaryDarkColor" />
+                android:color="@color/white" />
         </shape>
 
     </item>
@@ -20,7 +20,7 @@
             android:layout_height="match_parent">
             <stroke
                 android:width="2dp"
-                android:color="@color/secondaryDarkColor" />
+                android:color="@color/white" />
         </shape>
     </item>
 </layer-list>

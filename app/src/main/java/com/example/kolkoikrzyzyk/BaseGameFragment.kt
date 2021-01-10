@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.LinearLayout
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -51,7 +50,7 @@ abstract class BaseGameFragment : Fragment() {
                         )
                     }
                     onWin(result)
-                    val winnerName = when(result.winner) {
+                    val winnerName = when (result.winner) {
                         PlayerType.Nought -> gameViewModel.noughtUser
                         PlayerType.Cross -> gameViewModel.crossUser
                     }.name
@@ -87,12 +86,14 @@ abstract class BaseGameFragment : Fragment() {
             else enableButtons()
         }
         gameViewModel.currentPlayer.observe(viewLifecycleOwner) {
-            val image = if (it == PlayerType.Cross) R.drawable.cross else R.drawable.nought
+            val image =
+                if (it == PlayerType.Cross) R.drawable.white_cross else R.drawable.white_nought
             val name =
                 if (it == PlayerType.Cross) gameViewModel.crossUser.name else gameViewModel.noughtUser.name
             currentPlayerImageView.setImageResource(image)
             currentPlayerName.text = name
         }
+
     }
 
     abstract fun enableButtons()

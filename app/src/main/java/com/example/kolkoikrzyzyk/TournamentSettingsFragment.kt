@@ -3,23 +3,18 @@ package com.example.kolkoikrzyzyk
 import android.app.AlertDialog
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.kolkoikrzyzyk.database.Tournament
 import com.example.kolkoikrzyzyk.model.User
-import com.example.kolkoikrzyzyk.model.game.PlayerType
 import com.example.kolkoikrzyzyk.viewModels.TournamentViewModel
 import com.example.kolkoikrzyzyk.viewModels.UsersViewModel
 import kotlinx.android.synthetic.main.fragment_tournament_settings.*
-import kotlinx.android.synthetic.main.fragment_tournament_settings.createTournamentButton
-import kotlinx.android.synthetic.main.fragment_tournament_settings.sizeRadioGroup
-import kotlinx.android.synthetic.main.fragment_tournament_settings.switch3D
 
 class TournamentSettingsFragment : Fragment() {
     private val usersViewModel: UsersViewModel by activityViewModels()
@@ -91,7 +86,7 @@ class TournamentSettingsFragment : Fragment() {
         }
         switch3D.setOnCheckedChangeListener { _, isChecked -> tournamentViewModel.is3d = isChecked }
 
-        loadTournamentButton.setOnClickListener {selectTournamentDialog()}
+        loadTournamentButton.setOnClickListener { selectTournamentDialog() }
     }
 
     private fun choosePlayers() {
@@ -110,10 +105,12 @@ class TournamentSettingsFragment : Fragment() {
             R.style.Base_ThemeOverlay_MaterialComponents_Dialog_Alert
         ).apply {
             setCustomTitle(textView)
+            setNeutralButton("Confirm") { dialog, _ ->
+                dialog.dismiss()
+            }
             setMultiChoiceItems(
                 usersNames, checkedIndexes
-            ) { dialog, id, isChecked ->
-                Log.d("TournamentFragment", "id $id")
+            ) { _, id, isChecked ->
                 if (isChecked)
                     tournamentViewModel.addPlayer(users[id])
                 else

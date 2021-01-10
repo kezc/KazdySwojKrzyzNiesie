@@ -37,7 +37,7 @@ class RankingViewAdapter : RecyclerView.Adapter<RankingViewAdapter.ViewHolder>()
         RecyclerView.ViewHolder(view) {
         fun bind(user: User) {
             view.name.text = user.name
-            view.wins.text = user.wonGames.toString()
+            view.player2.text = user.wonGames.toString()
             view.draws.text = user.drawnGames.toString()
             view.loses.text = user.lostGames.toString()
         }

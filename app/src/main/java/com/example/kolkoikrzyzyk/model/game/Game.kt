@@ -1,7 +1,5 @@
 package com.example.kolkoikrzyzyk.model.game
 
-import android.util.Log
-
 class Game(val size: Int, val is3D: Boolean) {
     private val TAG = "Game"
     var currentPlayer = PlayerType.Cross
@@ -55,6 +53,8 @@ class Game(val size: Int, val is3D: Boolean) {
             ?: checkColumnsForWin()
             ?: check2DDiagonalsForWin()
             ?: check3DColumnsForWin()
+            ?: checkWallDiagonalsForWin()
+            ?: check3DDiagonalsForWin()
         if (winResult != null) {
             hasEnded = true
         } else if (moveCount == size * size * height) {
@@ -133,39 +133,6 @@ class Game(val size: Int, val is3D: Boolean) {
         return null
     }
 
-    fun check3DDiagonalsForWin(): GameResult? {
-        if (!is3D) return null
-
-        var sum = 0
-        for (i in 0 until size) {
-            sum += gameBoards[i][i][i].value
-        }
-        if (sum == size) {
-            return GameResult.Over(
-                PlayerType.Cross,
-                gameBoards.mapIndexed { i, board -> board[i][i] })
-        } else if (sum == -size) {
-            return GameResult.Over(
-                PlayerType.Nought,
-                gameBoards.mapIndexed { i, board -> board[i][i] })
-        }
-
-        sum = 0
-        for (i in 0 until size) {
-            sum += gameBoards[i][size - i - 1][size - i - 1].value
-        }
-        if (sum == size) {
-            return GameResult.Over(
-                PlayerType.Cross,
-                gameBoards.mapIndexed { i, board -> board[size - i - 1][size - i - 1] })
-        } else if (sum == -size) {
-            return GameResult.Over(
-                PlayerType.Nought,
-                gameBoards.mapIndexed { i, board -> board[size - i - 1][size - i - 1] })
-        }
-        return null
-    }
-
     fun check3DColumnsForWin(): GameResult? {
         if (!is3D) return null
         for (x in 0 until size) {
@@ -186,10 +153,136 @@ class Game(val size: Int, val is3D: Boolean) {
 
     fun checkWallDiagonalsForWin(): GameResult? {
         if (!is3D) return null
-        TODO("Not yet implemented")
+
+        for (x in 0 until size) {
+            var sum = 0
+            for (z in 0 until size) {
+                sum += gameBoards[z][z][x].value
+            }
+            if (sum == size) {
+                return GameResult.Over(
+                    PlayerType.Cross,
+                    gameBoards.mapIndexed { i, board -> board[i][x] })
+            } else if (sum == -size) {
+                return GameResult.Over(
+                    PlayerType.Nought,
+                    gameBoards.mapIndexed { i, board -> board[i][x] })
+            }
+        }
+        for (x in 0 until size) {
+            var sum = 0
+            for (z in 0 until size) {
+                sum += gameBoards[z][size - z - 1][x].value
+            }
+            if (sum == size) {
+                return GameResult.Over(
+                    PlayerType.Cross,
+                    gameBoards.mapIndexed { i, board -> board[size - i - 1][x] })
+            } else if (sum == -size) {
+                return GameResult.Over(
+                    PlayerType.Nought,
+                    gameBoards.mapIndexed { i, board -> board[size - i - 1][x] })
+            }
+        }
+
+        for (y in 0 until size) {
+            var sum = 0
+            for (z in 0 until size) {
+                sum += gameBoards[z][y][z].value
+            }
+            if (sum == size) {
+                return GameResult.Over(
+                    PlayerType.Cross,
+                    gameBoards.mapIndexed { i, board -> board[y][i] })
+            } else if (sum == -size) {
+                return GameResult.Over(
+                    PlayerType.Nought,
+                    gameBoards.mapIndexed { i, board -> board[y][i] })
+            }
+        }
+
+        for (y in 0 until size) {
+            var sum = 0
+            for (z in 0 until size) {
+                sum += gameBoards[z][y][size - z - 1].value
+            }
+            if (sum == size) {
+                return GameResult.Over(
+                    PlayerType.Cross,
+                    gameBoards.mapIndexed { i, board -> board[y][size - i - 1] })
+            } else if (sum == -size) {
+                return GameResult.Over(
+                    PlayerType.Nought,
+                    gameBoards.mapIndexed { i, board -> board[y][size - i - 1] })
+            }
+        }
+
+        return null
     }
 
-    internal fun clearField(x: Int, y: Int, z: Int) {
+    fun check3DDiagonalsForWin(): GameResult? {
+        if (!is3D) return null
+
+        var sum = 0
+        for (i in 0 until size) {
+            sum += gameBoards[i][i][i].value
+        }
+        if (sum == size) {
+            return GameResult.Over(
+                PlayerType.Cross,
+                gameBoards.mapIndexed { i, board -> board[i][i] })
+        } else if (sum == -size) {
+            return GameResult.Over(
+                PlayerType.Nought,
+                gameBoards.mapIndexed { i, board -> board[i][i] })
+        }
+
+        sum = 0
+        for (i in 0 until size) {
+            sum += gameBoards[i][i][size - i - 1].value
+        }
+        if (sum == size) {
+            return GameResult.Over(
+                PlayerType.Cross,
+                gameBoards.mapIndexed { i, board -> board[i][size - i - 1] })
+        } else if (sum == -size) {
+            return GameResult.Over(
+                PlayerType.Nought,
+                gameBoards.mapIndexed { i, board -> board[i][size - i - 1] })
+        }
+
+        sum = 0
+        for (i in 0 until size) {
+            sum += gameBoards[i][size - i - 1][i].value
+        }
+        if (sum == size) {
+            return GameResult.Over(
+                PlayerType.Cross,
+                gameBoards.mapIndexed { i, board -> board[size - i - 1][i] })
+        } else if (sum == -size) {
+            return GameResult.Over(
+                PlayerType.Nought,
+                gameBoards.mapIndexed { i, board -> board[size - i - 1][i] })
+        }
+
+        sum = 0
+        for (i in 0 until size) {
+            sum += gameBoards[i][size - i - 1][size - i - 1].value
+        }
+        if (sum == size) {
+            return GameResult.Over(
+                PlayerType.Cross,
+                gameBoards.mapIndexed { i, board -> board[size - i - 1][size - i - 1] })
+        } else if (sum == -size) {
+            return GameResult.Over(
+                PlayerType.Nought,
+                gameBoards.mapIndexed { i, board -> board[size - i - 1][size - i - 1] })
+        }
+
+        return null
+    }
+
+    fun clearField(x: Int, y: Int, z: Int) {
         gameBoards[z][y][x].placeEmpty()
         moveCount--
         currentPlayer = currentPlayer.getOther()

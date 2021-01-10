@@ -50,6 +50,7 @@
             tools:text="wojtekwojtek" />
 
         <ImageView
+            tools:src="@drawable/cross"
             android:id="@+id/currentPlayerImageView"
             android:layout_width="48dp"
             android:layout_height="48dp"

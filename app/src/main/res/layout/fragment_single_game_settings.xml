@@ -38,23 +38,23 @@
 
             <Button
                 android:layout_marginTop="16dp"
-                android:id="@+id/selectPlayerNought"
+                android:id="@+id/selectPlayerCross"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Select Player O"
-                app:layout_constraintEnd_toStartOf="@+id/selectPlayerCross"
+                android:text="Select Player X"
+                app:layout_constraintEnd_toStartOf="@+id/selectPlayerNought"
                 app:layout_constraintHorizontal_chainStyle="spread"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/sizeRadioGroup" />
 
             <Button
                 android:layout_marginTop="16dp"
-                android:id="@+id/selectPlayerCross"
+                android:id="@+id/selectPlayerNought"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Select Player X"
+                android:text="Select Player O"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/selectPlayerNought"
+                app:layout_constraintStart_toEndOf="@+id/selectPlayerCross"
                 app:layout_constraintTop_toBottomOf="@+id/sizeRadioGroup" />
 
             <TextView

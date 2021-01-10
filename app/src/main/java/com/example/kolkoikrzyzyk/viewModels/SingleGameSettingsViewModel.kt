@@ -13,7 +13,7 @@ class SingleGameSettingsViewModel : ViewModel() {
     private val _crossPlayer = MutableLiveData<User?>()
     val crossPlayer: LiveData<User?>
         get() = _crossPlayer
-    private val _selectError = MutableLiveData<String>("You need to select two users")
+    private val _selectError = MutableLiveData("You need to select two users")
     val selectError: LiveData<String>
         get() = _selectError
 
@@ -43,7 +43,6 @@ class SingleGameSettingsViewModel : ViewModel() {
             _selectError.value = ""
         }
     }
-
 
     fun onPlay() {
         val noughtUser = _noughtPlayer.value

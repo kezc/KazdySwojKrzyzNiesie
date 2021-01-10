@@ -36,7 +36,7 @@ class GamesHistoryViewAdapter : RecyclerView.Adapter<GamesHistoryViewAdapter.Vie
         RecyclerView.ViewHolder(view) {
         fun bind(name1: String, name2: String, result: String) {
             view.player1.text = name1
-            view.wins.text = name2
+            view.player2.text = name2
             view.draws.text = result
         }
     }

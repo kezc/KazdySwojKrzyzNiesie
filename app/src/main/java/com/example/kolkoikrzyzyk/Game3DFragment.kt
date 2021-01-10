@@ -6,8 +6,6 @@ import android.view.MotionEvent
 import android.view.View
 import android.widget.ImageButton
 import android.widget.LinearLayout
-import android.widget.Toast
-import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.kolkoikrzyzyk.model.game.GameResult
@@ -54,7 +52,7 @@ class Game3DFragment : BaseGameFragment() {
     }
 
     private fun createBoard(size: Int) {
-        val buttonSize = (if (size == 4) 48f else 64f).dpToPixels(resources).roundToInt()
+        val buttonSize = (if (size == 4) 44f else 64f).dpToPixels(resources).roundToInt()
         val tempButtons = mutableListOf<List<List<ImageButton>>>()
 
         for (z in 0 until size) {
@@ -82,17 +80,10 @@ class Game3DFragment : BaseGameFragment() {
     }
 
     override fun onDraw() {
-        Toast.makeText(requireContext(), "REMIS", Toast.LENGTH_LONG)
-            .show()
         disableButtons()
     }
 
     override fun onWin(result: GameResult.Over) {
-        Toast.makeText(
-            requireContext(),
-            "WYGRAL ${result.winner}",
-            Toast.LENGTH_LONG
-        ).show()
         disableButtons()
         result.winningFields.forEach { field ->
             onWinAnimation(buttons[field.z][field.y][field.x], field)

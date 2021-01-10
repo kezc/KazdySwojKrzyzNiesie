@@ -5,6 +5,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -14,7 +16,7 @@ import com.example.kolkoikrzyzyk.viewModels.TournamentViewModel
 import com.example.kolkoikrzyzyk.viewModels.UsersViewModel
 import kotlinx.android.synthetic.main.fragment_tournament_details.*
 import kotlinx.android.synthetic.main.result_card.player1
-import kotlinx.android.synthetic.main.result_card.wins
+import kotlinx.android.synthetic.main.result_card.player2
 
 
 class TournamentDetailsFragment : Fragment() {
@@ -48,7 +50,7 @@ class TournamentDetailsFragment : Fragment() {
                 user1 = pair.first
                 user2 = pair.second
                 player1.text = pair.first.name
-                wins.text = pair.second.name
+                player2.text = pair.second.name
             }
             checkIfUsersLoggedIn()
         }
@@ -57,7 +59,7 @@ class TournamentDetailsFragment : Fragment() {
             if (it) {
                 nextMatchText.text = "Tournament is over"
                 player1.visibility = View.GONE
-                wins.visibility = View.GONE
+                player2.visibility = View.GONE
                 playButton.visibility = View.GONE
             }
         }
@@ -88,17 +90,17 @@ class TournamentDetailsFragment : Fragment() {
         }
 
         playButton.setOnClickListener {
-            playGame()
+            val imm =
+                ContextCompat.getSystemService(requireContext(), InputMethodManager::class.java)
+            imm?.hideSoftInputFromWindow(view.windowToken, 0)
+            handleButtonClick()
         }
 
     }
 
-    private fun playGame() {
+    private fun handleButtonClick() {
         val user1Temp = user1
         val user2Temp = user2
-        Log.d("Tournament", user1Temp.toString())
-        Log.d("Tournament", user2Temp.toString())
-        Log.d("Tournament", tournamentViewModel.tournament?.isOver.toString())
         if (user1Temp != null && user2Temp != null && tournamentViewModel.tournament?.isOver == false) {
             if (!usersSet.containsAll(listOf(user1, user2))) return
             when (tournamentViewModel.is3d) {
@@ -123,7 +125,7 @@ class TournamentDetailsFragment : Fragment() {
             }
         } else {
             player1.text = ""
-            wins.text = ""
+            player2.text = ""
         }
     }
 
@@ -134,7 +136,7 @@ class TournamentDetailsFragment : Fragment() {
             if (usersSet.containsAll(listOf(tempUser1, tempUser2))) {
                 playButton.text = "Play"
                 playButton.setOnClickListener {
-                    playGame()
+                    handleButtonClick()
                 }
             } else {
                 playButton.text = "Both users need to be logged in"

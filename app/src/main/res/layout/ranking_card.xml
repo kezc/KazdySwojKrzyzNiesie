@@ -23,7 +23,7 @@
             tools:text="wojtek" />
 
         <TextView
-            android:id="@+id/wins"
+            android:id="@+id/player2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="@+id/winHint"
@@ -69,7 +69,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/drawsHint"
             app:layout_constraintStart_toEndOf="@+id/nameHint"
-            app:layout_constraintTop_toBottomOf="@+id/wins" />
+            app:layout_constraintTop_toBottomOf="@+id/player2" />
 
         <TextView
             android:id="@+id/drawsHint"
