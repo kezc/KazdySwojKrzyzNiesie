@@ -55,9 +55,10 @@ class TournamentDetailsFragment : Fragment() {
             checkIfUsersLoggedIn()
         }
 
-        tournamentViewModel.isTournamentOver()?.observe(viewLifecycleOwner) {
-            if (it) {
-                nextMatchText.text = "Tournament is over"
+        tournamentViewModel.getTournamentWinnerUid()?.observe(viewLifecycleOwner) { users ->
+            users?.let {
+                val winners = users.map { it?.name }.joinToString()
+                nextMatchText.text = "Koniec turnieju.\n Zwyciestwo: $winners"
                 player1.visibility = View.GONE
                 player2.visibility = View.GONE
                 playButton.visibility = View.GONE
@@ -79,9 +80,9 @@ class TournamentDetailsFragment : Fragment() {
                 val player2 =
                     tournamentViewModel.players.find { it.uid == gameResult.uidTwo }?.name ?: ""
                 val result = when (gameResult.result) {
-                    0 -> "draw"
-                    1 -> "winner: $player1"
-                    2 -> "winner: $player2"
+                    0 -> "Remis"
+                    1 -> "Wygrany: $player1"
+                    2 -> "Wygrany: $player2"
                     else -> ""
                 }
                 listOf(player1, player2, result)
@@ -134,12 +135,12 @@ class TournamentDetailsFragment : Fragment() {
         val tempUser2 = user2
         if (tempUser1 != null && tempUser2 != null) {
             if (usersSet.containsAll(listOf(tempUser1, tempUser2))) {
-                playButton.text = "Play"
+                playButton.text = "Graj"
                 playButton.setOnClickListener {
                     handleButtonClick()
                 }
             } else {
-                playButton.text = "Both users need to be logged in"
+                playButton.text = "Obaj gracze muszą być zalogowani"
                 val missingName = if (!usersSet.contains(user1)) {
                     tempUser1.name
                 } else {
@@ -148,7 +149,9 @@ class TournamentDetailsFragment : Fragment() {
                 playButton.setOnClickListener {
                     findNavController()
                         .navigate(
-                            TournamentDetailsFragmentDirections.actionTournamentDetailsFragmentToLoginFragment(missingName)
+                            TournamentDetailsFragmentDirections.actionTournamentDetailsFragmentToLoginFragment(
+                                missingName
+                            )
                         )
                 }
             }

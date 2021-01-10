@@ -11,6 +11,8 @@ import com.example.kolkoikrzyzyk.model.game.GameResult
 import com.example.kolkoikrzyzyk.repositories.TournamentRepository
 import com.example.kolkoikrzyzyk.repositories.UserRepository
 import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
 
 class TournamentViewModel(application: Application) : AndroidViewModel(application) {
     var is3d = false
@@ -48,11 +50,34 @@ class TournamentViewModel(application: Application) : AndroidViewModel(applicati
         }
     }
 
-    fun isTournamentOver(): LiveData<Boolean>? {
-        return tournament?.let {
-            Transformations.map(tournamentRepository.getTournamentMatchesCount(it)) { count ->
-                return@map count == players.size * (players.size - 1) / 2
-            }
+    fun getTournamentWinnerUid(): LiveData<List<User?>?>? {
+        return tournament?.let { currentTournament ->
+            Transformations.map(tournamentRepository.getTournamentMatches(currentTournament)) { matches ->
+                if (matches.size == players.size * (players.size - 1) / 2) {
+                    val winner1 = matches.filter { it.result == 1 }.groupBy { it.uidOne }
+                        .map { (key, list) -> key to list.size * 3 }.toMap()
+                    val winner2 = matches.filter { it.result == 2 }.groupBy { it.uidTwo }
+                        .map { (key, list) -> key to list.size * 3 }.toMap()
+                    val draws1 = matches.filter { it.result == 0 }.groupBy { it.uidOne }
+                        .map { (key, list) -> key to list.size * 1 }.toMap()
+                    val draws2 = matches.filter { it.result == 0 }.groupBy { it.uidTwo }
+                        .map { (key, list) -> key to list.size * 1 }.toMap()
+                    val usersPoints =
+                        (winner1.asSequence() + winner2.asSequence() + draws1.asSequence() + draws2.asSequence())
+                            .distinct()
+                            .groupBy({ it.key }, { it.value })
+                            .mapValues { (_, values) -> values.sum() }
+                    val maxPoints = usersPoints.maxByOrNull { (_, value) -> value }?.value
+
+                    return@map usersPoints.filter { (_, points) -> points == maxPoints }
+                        .map { it.key }
+                }
+                null
+            }.asFlow().flowOn(Dispatchers.IO).map { list ->
+                list?.map { id ->
+                    userRepository.getUserById(id)?.toUser()
+                }
+            }.asLiveData(viewModelScope.coroutineContext)
         }
     }
 
