@@ -6,7 +6,6 @@ import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -26,38 +25,31 @@ class SplashFragment : Fragment() {
         return view
     }
 
-    override fun onResume() {
-        super.onResume()
-//        (activity as AppCompatActivity?)!!.supportActionBar!!.hide()
-
-    }
-
-    override fun onStop() {
-        super.onStop()
-//        (activity as AppCompatActivity?)!!.supportActionBar!!.show()
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val valueAnimator = ValueAnimator.ofFloat(0f, 360f).apply {
+        val valueAnimator = ValueAnimator.ofFloat(1F, 1.2F, 1F, 0.8F).apply {
             repeatCount = 10
-            duration = 500
+            duration = 400
             addUpdateListener {
-                image.rotation = it.animatedValue as Float
+                image.scaleX = it.animatedValue as Float
+                image.scaleY = it.animatedValue as Float
             }
             start()
         }
         usersViewModel.users.observe(viewLifecycleOwner) { users ->
             Handler().postDelayed({
                 valueAnimator.cancel()
-                findNavController().navigate(
-                    if (users.size == 0) {
+                if (users.size == 0) {
+                    findNavController().navigate(
                         SplashFragmentDirections.actionSplashFragmentToLoginFragment()
-                    } else {
+                    )
+                } else {
+                    findNavController().navigate(
                         SplashFragmentDirections.actionSplashFragmentToMainFragment()
-                    }
-                )
+                    )
+                }
+
             }, 500)
 
         }
