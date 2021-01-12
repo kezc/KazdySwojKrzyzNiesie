@@ -3,6 +3,7 @@ package com.example.kolkoikrzyzyk
 import android.animation.ValueAnimator
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -81,10 +82,6 @@ abstract class BaseGameFragment : Fragment() {
             }
         })
 
-        gameViewModel.computerThinking.observe(viewLifecycleOwner) {
-            if (it) disableButtons()
-            else enableButtons()
-        }
         gameViewModel.currentPlayer.observe(viewLifecycleOwner) {
             val image =
                 if (it == PlayerType.Cross) R.drawable.white_cross else R.drawable.white_nought
@@ -95,10 +92,6 @@ abstract class BaseGameFragment : Fragment() {
         }
 
     }
-
-    abstract fun enableButtons()
-
-    abstract fun disableButtons()
 
     protected abstract fun onDraw()
 
@@ -125,6 +118,7 @@ abstract class BaseGameFragment : Fragment() {
                 setPadding(0, 0, 0, 0)
                 id = View.generateViewId()
                 setOnClickListener {
+                    Log.d("BaseGameFragment", "$x, $y, $z")
                     gameViewModel.makeMove(x, y, z)
                 }
                 setBackgroundColor(resources.getColor(R.color.secondaryLightColor))

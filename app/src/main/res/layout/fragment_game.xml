@@ -7,15 +7,17 @@
     tools:background="@drawable/wooden_background_repeat"
     tools:context=".Game3DFragment">
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/endGameButton"
+        android:layout_marginHorizontal="32dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
+        app:cornerRadius="16dp"
         android:padding="16dp"
         android:text="Return"
         android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@+id/textView2" />
+        app:layout_constraintBottom_toTopOf="@+id/textView2"
+        app:layout_constraintTop_toTopOf="@+id/gameContainer" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/textView2"

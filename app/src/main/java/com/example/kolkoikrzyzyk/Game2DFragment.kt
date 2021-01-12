@@ -1,10 +1,10 @@
 package com.example.kolkoikrzyzyk
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.ImageButton
 import android.widget.LinearLayout
-import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.kolkoikrzyzyk.model.game.FieldType
@@ -33,6 +33,7 @@ class Game2DFragment : BaseGameFragment() {
             it?.let { field ->
                 val button = buttons[field.y][field.x]
                 button.isClickable = field.type == FieldType.Empty
+                Log.d("BaseGameFragment", "${field.x}, ${field.y}: ${button.isClickable}")
                 button.setFieldImage(field.type)
             }
         })
@@ -60,13 +61,10 @@ class Game2DFragment : BaseGameFragment() {
         }
     }
 
-    override fun disableButtons() {
+    private fun disableButtons() {
         buttons.forEach { it.forEach { button -> button.isClickable = false } }
     }
 
-    override fun enableButtons() {
-        buttons.forEach { it.forEach { button -> button.isClickable = true } }
-    }
 
     private fun createBoard(size: Int) {
         val buttonSize = (if (size == 4) 84f else 96f).dpToPixels(resources).roundToInt()

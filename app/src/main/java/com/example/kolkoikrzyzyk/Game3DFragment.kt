@@ -90,20 +90,11 @@ class Game3DFragment : BaseGameFragment() {
         }
     }
 
-    override fun disableButtons() {
+    fun disableButtons() {
         buttons.forEach { board ->
             board.forEach { row ->
                 row.forEach { button ->
                     button.isClickable = false
-                }
-            }
-        }
-    }
-    override fun enableButtons() {
-        buttons.forEach { board ->
-            board.forEach { row ->
-                row.forEach { button ->
-                    button.isClickable = true
                 }
             }
         }

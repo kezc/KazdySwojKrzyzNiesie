@@ -1,11 +1,14 @@
 package com.example.kolkoikrzyzyk.viewModels
 
 import android.app.Application
-import androidx.lifecycle.*
-import com.example.kolkoikrzyzyk.repositories.UserRepository
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.example.kolkoikrzyzyk.database.AppDatabase
 import com.example.kolkoikrzyzyk.model.User
 import com.example.kolkoikrzyzyk.model.game.*
+import com.example.kolkoikrzyzyk.repositories.UserRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -31,9 +34,7 @@ class GameViewModel(application: Application) : AndroidViewModel(application) {
     private val _gameResult = MutableLiveData<GameResult?>()
     val gameResult: MutableLiveData<GameResult?>
         get() = _gameResult
-    private var _computerThinking = MutableLiveData(false)
-    val computerThinking: LiveData<Boolean>
-        get() = _computerThinking
+    private var isComputerThinking = false
     private var _currentPlayer = MutableLiveData<PlayerType>()
     val currentPlayer: LiveData<PlayerType>
         get() = _currentPlayer
@@ -52,6 +53,9 @@ class GameViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun makeMove(x: Int, y: Int, z: Int) {
+        if (isComputerThinking == true) {
+            return
+        }
         if (game.makeMove(x, y, z)) {
             _lastSuccessfulMove.value = game.gameBoards[z][y][x]
         }
@@ -91,7 +95,7 @@ class GameViewModel(application: Application) : AndroidViewModel(application) {
         private fun computerMove() = computer?.let {
         viewModelScope.launch {
             withContext(Dispatchers.Main) {
-                _computerThinking.value = true
+                isComputerThinking = true
                 val field = withContext(Dispatchers.Default) {
                     val executor = Executors.newSingleThreadExecutor()
                     val callable: Callable<Field?> = Callable<Field?> { it.move() }
@@ -102,7 +106,7 @@ class GameViewModel(application: Application) : AndroidViewModel(application) {
                 val result = game.checkForWin()
                 _gameResult.value = result
                 if (result is GameResult.Pending) {
-                    _computerThinking.value = false
+                    isComputerThinking = false
                     _currentPlayer.value = game.currentPlayer
                 } else {
                     onGameEnd(result)

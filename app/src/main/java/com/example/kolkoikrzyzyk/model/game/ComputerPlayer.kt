@@ -18,7 +18,7 @@ class ComputerPlayer(
     private fun updateMaxDepth() {
         val leftFields = game.size * game.size * game.height - game.moveCount
         maxDepth = when {
-            leftFields <= 9 -> 9
+            leftFields <= 9 -> 7
             leftFields <= 12 -> 6
             leftFields <= 14 -> 5
             leftFields <= 18 -> 4

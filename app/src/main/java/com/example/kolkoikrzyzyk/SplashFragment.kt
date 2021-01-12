@@ -28,7 +28,7 @@ class SplashFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val valueAnimator = ValueAnimator.ofFloat(1F, 1.2F, 1F, 0.8F).apply {
+        val valueAnimator = ValueAnimator.ofFloat(1F, 1.15F, 1F, 0.85F, 1F).apply {
             repeatCount = 10
             duration = 400
             addUpdateListener {
