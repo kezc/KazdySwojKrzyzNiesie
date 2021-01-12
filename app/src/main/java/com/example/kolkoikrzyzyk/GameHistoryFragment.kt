@@ -19,7 +19,6 @@ class GameHistoryFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_game_history, container, false)
     }
 
@@ -32,13 +31,14 @@ class GameHistoryFragment : Fragment() {
             val lines = withContext(Dispatchers.IO) {
                 try {
                     val file = File(requireContext().filesDir, "results.txt")
-                    historyList.visibility = View.VISIBLE
                     file.readLines().map { it.split(",") }.reversed()
                 } catch (e: Exception) {
-                    historyList.visibility = View.INVISIBLE
+                    Log.e("GameHistoryFragment", e.toString())
                     listOf()
                 }
             }
+
+            historyList.visibility = if (lines.isEmpty()) View.INVISIBLE else View.INVISIBLE
             adapter.submitList(lines)
 
             Log.d("GameHistoryFragment", lines.toString())
@@ -49,5 +49,6 @@ class GameHistoryFragment : Fragment() {
             }
             progressBar.visibility = View.INVISIBLE
         }
+
     }
 }

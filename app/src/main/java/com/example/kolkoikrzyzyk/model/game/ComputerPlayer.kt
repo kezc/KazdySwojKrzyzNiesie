@@ -27,7 +27,7 @@ class ComputerPlayer(
         }
     }
 
-    fun minMax(depth: Int, turn: PlayerType): Int {
+    private fun minMax(depth: Int, turn: PlayerType): Int {
         val result = game.checkForWin()
         if (result is GameResult.Draw || depth == maxDepth) return 0
         if (result is GameResult.Over) {
