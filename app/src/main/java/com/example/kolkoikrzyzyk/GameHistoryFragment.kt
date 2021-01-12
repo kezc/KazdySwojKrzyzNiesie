@@ -38,7 +38,7 @@ class GameHistoryFragment : Fragment() {
                 }
             }
 
-            historyList.visibility = if (lines.isEmpty()) View.INVISIBLE else View.INVISIBLE
+            historyList.visibility = if (lines.isEmpty()) View.INVISIBLE else View.VISIBLE
             adapter.submitList(lines)
 
             Log.d("GameHistoryFragment", lines.toString())
