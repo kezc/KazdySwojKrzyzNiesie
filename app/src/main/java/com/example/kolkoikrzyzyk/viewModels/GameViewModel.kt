@@ -13,8 +13,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.File
-import java.util.concurrent.Callable
-import java.util.concurrent.Executors
 import kotlin.concurrent.thread
 
 
@@ -96,10 +94,7 @@ class GameViewModel(application: Application) : AndroidViewModel(application) {
             withContext(Dispatchers.Main) {
                 isComputerThinking = true
                 val field = withContext(Dispatchers.Default) {
-                    val executor = Executors.newSingleThreadExecutor()
-                    val callable: Callable<Field?> = Callable<Field?> { it.move() }
-                    val future = executor.submit(callable)
-                    future.get()
+                    it.move()
                 }
                 _lastSuccessfulMove.value = field
                 val result = game.checkForWin()
