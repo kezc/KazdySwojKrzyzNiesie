@@ -6,7 +6,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -43,8 +45,14 @@ class TournamentSettingsFragment : Fragment() {
         }
 
         createTournamentButton.setOnClickListener {
+            val imm =
+                ContextCompat.getSystemService(requireContext(), InputMethodManager::class.java)
+            imm?.hideSoftInputFromWindow(view.windowToken, 0)
+
             if (tournamentViewModel.players.size < 2) {
                 errorMessage.text = "Należy wybrać przynajmniej 2 użytkowników"
+            } else if (nameEditText.text.isBlank()) {
+                errorMessage.text = "Nazwa nie może być pusta"
             } else {
                 tournamentViewModel.tournamentName = nameEditText.text.toString()
                 tournamentViewModel.createTournament()

@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.navigation.NavigationView
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -17,5 +18,9 @@ class MainActivity : AppCompatActivity() {
         val navController = navHostFragment.navController
         findViewById<NavigationView>(R.id.navView)
             .setupWithNavController(navController)
+
+        closeBtn.setOnClickListener {
+            finishAffinity()
+        }
     }
 }
