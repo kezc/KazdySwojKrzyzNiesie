@@ -164,7 +164,7 @@ class GameViewModel(application: Application) : AndroidViewModel(application) {
                 GameResult.Draw -> "Remis"
                 GameResult.Pending -> ""
             }
-            file.appendText("${noughtUser.name},${crossUser.name},$result\n")
+            file.appendText("${crossUser.name},${noughtUser.name},$result\n")
         }
     }
 }

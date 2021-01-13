@@ -83,7 +83,7 @@ class TournamentDetailsFragment : Fragment() {
                     else -> ""
                 }
                 listOf(player1, player2, result)
-            }
+            }.reversed()
             adapter.submitList(list)
         }
 
