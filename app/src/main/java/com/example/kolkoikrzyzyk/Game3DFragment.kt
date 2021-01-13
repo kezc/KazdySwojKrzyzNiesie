@@ -40,11 +40,6 @@ class Game3DFragment : BaseGameFragment() {
         })
 
         endGameButton.setOnClickListener {
-//            if (isTournament) {
-//                findNavController().navigate(Game3DFragmentDirections.actionGame3DFragmentToTournamentDetailsFragment())
-//            } else {
-//                findNavController().navigate(Game3DFragmentDirections.actionGame3DFragmentToMainFragment())
-//            }
             findNavController().popBackStack()
         }
 
@@ -90,7 +85,7 @@ class Game3DFragment : BaseGameFragment() {
         }
     }
 
-    fun disableButtons() {
+    private fun disableButtons() {
         buttons.forEach { board ->
             board.forEach { row ->
                 row.forEach { button ->

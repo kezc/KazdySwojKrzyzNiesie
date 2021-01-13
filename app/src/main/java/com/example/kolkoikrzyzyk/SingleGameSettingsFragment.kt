@@ -3,7 +3,6 @@ package com.example.kolkoikrzyzyk
 import android.app.AlertDialog
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,7 +21,7 @@ import kotlinx.android.synthetic.main.fragment_single_game_settings.*
 class SingleGameSettingsFragment : Fragment() {
     private val TAG = "SingleGameSettingsFragment"
 
-    private val computerUser = User(-1, "Computer", "")
+    private val computerUser = User(-1, "Komputer", "")
     private val usersViewModel: UsersViewModel by activityViewModels()
     private val singleGameSettingsViewModel: SingleGameSettingsViewModel by viewModels()
     private var users = listOf(computerUser)
@@ -36,18 +35,20 @@ class SingleGameSettingsFragment : Fragment() {
         usersViewModel.users.observe(viewLifecycleOwner) {
             users = listOf(computerUser) + it.toList()
         }
+
         singleGameSettingsViewModel.crossPlayer.observe(viewLifecycleOwner) { user ->
             user?.let {
                 selectPlayerCross.text = it.name
             }
         }
+
         singleGameSettingsViewModel.noughtPlayer.observe(viewLifecycleOwner) { user ->
             user?.let {
                 selectPlayerNought.text = it.name
             }
         }
+
         singleGameSettingsViewModel.selectError.observe(viewLifecycleOwner) {
-            Log.d("SingleGameSettings", "$it ${it.isBlank()}")
             errorMessage.text = it
             createTournamentButton.isEnabled = it.isBlank()
         }
@@ -76,15 +77,19 @@ class SingleGameSettingsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         selectPlayerNought.setOnClickListener {
             choosePlayer(PlayerType.Nought)
         }
+
         selectPlayerCross.setOnClickListener {
             choosePlayer(PlayerType.Cross)
         }
+
         createTournamentButton.setOnClickListener {
             singleGameSettingsViewModel.onPlay()
         }
+
         sizeRadioGroup.setOnCheckedChangeListener { _, id ->
             singleGameSettingsViewModel.gameSize = when (id) {
                 R.id.radioButtonSize3 -> 3
@@ -92,7 +97,10 @@ class SingleGameSettingsFragment : Fragment() {
                 else -> 3
             }
         }
-        switch3D.setOnCheckedChangeListener { _, isChecked -> singleGameSettingsViewModel.is3d = isChecked }
+
+        switch3D.setOnCheckedChangeListener { _, isChecked ->
+            singleGameSettingsViewModel.is3d = isChecked
+        }
     }
 
     fun choosePlayer(player: PlayerType) {

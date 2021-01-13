@@ -10,7 +10,6 @@ class GamesHistoryViewAdapter : RecyclerView.Adapter<GamesHistoryViewAdapter.Vie
     private var values: List<List<String>> = listOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-
         return ViewHolder(
             LayoutInflater.from(parent.context).inflate(
                 R.layout.result_card,

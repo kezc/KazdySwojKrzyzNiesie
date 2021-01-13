@@ -28,18 +28,23 @@ class MainFragment : Fragment() {
         singleGameButton.setOnClickListener {
             findNavController().navigate(MainFragmentDirections.actionMainFragmentToSingleGameSettingsFragment())
         }
+
         rankingButton.setOnClickListener {
             findNavController().navigate(MainFragmentDirections.actionMainFragmentToRankingFragment())
         }
+
         tournamentButton.setOnClickListener {
             findNavController().navigate(MainFragmentDirections.actionMainFragmentToTournamentSettingsFragment())
         }
+
         historyButton.setOnClickListener {
             findNavController().navigate(MainFragmentDirections.actionMainFragmentToGameHistoryFragment())
         }
+
         val adapter = UsersViewAdapter { user ->
             usersViewModel.logout(user)
         }
+
         usersList.layoutManager =
             LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
         usersList.adapter = adapter
@@ -53,7 +58,5 @@ class MainFragment : Fragment() {
                 findNavController().navigate(MainFragmentDirections.actionMainFragmentToLoginFragmentWithoutStack())
             }
         }
-
     }
-
 }

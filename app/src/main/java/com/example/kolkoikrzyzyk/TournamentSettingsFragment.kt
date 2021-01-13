@@ -26,7 +26,6 @@ class TournamentSettingsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_tournament_settings, container, false)
     }
 
@@ -38,17 +37,17 @@ class TournamentSettingsFragment : Fragment() {
         usersViewModel.users.observe(viewLifecycleOwner) {
             users = it.toList()
         }
+
         playerListButton.setOnClickListener {
             choosePlayers()
         }
+
         createTournamentButton.setOnClickListener {
             if (tournamentViewModel.players.size < 2) {
-                errorMessage.text = "You need to select at least 2 users"
-
+                errorMessage.text = "Należy wybrać przynajmniej 2 użytkowników"
             } else {
                 tournamentViewModel.tournamentName = nameEditText.text.toString()
                 tournamentViewModel.createTournament()
-
             }
         }
 
@@ -57,10 +56,10 @@ class TournamentSettingsFragment : Fragment() {
             allTournamentsProgressBar.visibility = View.INVISIBLE
             loadTournamentButton.visibility = View.VISIBLE
             if (it.isNotEmpty()) {
-                loadTournamentButton.text = "Load tournament"
+                loadTournamentButton.text = "Wczytaj turniej"
                 loadTournamentButton.isEnabled = true
             } else {
-                loadTournamentButton.text = "No tournaments to load"
+                loadTournamentButton.text = "Brak turniejów do wczytania"
                 loadTournamentButton.isEnabled = false
             }
         }
@@ -73,7 +72,7 @@ class TournamentSettingsFragment : Fragment() {
 
         tournamentViewModel.nameOccupied.observe(viewLifecycleOwner) {
             it.getContentIfNotHandled()?.let {
-                errorMessage.text = "There's tournament with this name"
+                errorMessage.text = "Istnieje już turniej o tej nazwie"
             }
         }
 
@@ -145,5 +144,4 @@ class TournamentSettingsFragment : Fragment() {
         val alert = builder.create()
         alert.show()
     }
-
 }

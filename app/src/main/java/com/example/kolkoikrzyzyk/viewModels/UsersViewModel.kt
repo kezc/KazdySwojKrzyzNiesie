@@ -52,7 +52,6 @@ class UsersViewModel(application: Application) : AndroidViewModel(application) {
             repository.registerNewUser(name, password)
         }
         if (id != -1L) {
-//            addUser(User(id, name, password))
             _operationSuccessful.value = Event(true)
         } else {
             message = "Login jest zajęty"

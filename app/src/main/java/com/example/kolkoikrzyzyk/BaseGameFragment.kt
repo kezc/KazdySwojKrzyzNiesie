@@ -22,8 +22,6 @@ import kotlinx.android.synthetic.main.fragment_game.*
 
 
 abstract class BaseGameFragment : Fragment() {
-
-    //    protected val usersViewModel: UsersViewModel by activityViewModels()
     protected val gameViewModel: GameViewModel by viewModels()
     private val tournamentViewModel: TournamentViewModel by activityViewModels()
     private var startingClick = true

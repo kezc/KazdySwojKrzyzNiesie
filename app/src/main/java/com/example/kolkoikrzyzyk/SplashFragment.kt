@@ -37,6 +37,7 @@ class SplashFragment : Fragment() {
             }
             start()
         }
+
         usersViewModel.users.observe(viewLifecycleOwner) { users ->
             Handler().postDelayed({
                 valueAnimator.cancel()
@@ -49,9 +50,7 @@ class SplashFragment : Fragment() {
                         SplashFragmentDirections.actionSplashFragmentToMainFragment()
                     )
                 }
-
             }, 500)
-
         }
     }
 }

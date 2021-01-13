@@ -1,7 +1,6 @@
 package com.example.kolkoikrzyzyk
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,7 +26,6 @@ class TournamentDetailsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_tournament_details, container, false)
     }
 
@@ -37,7 +35,6 @@ class TournamentDetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.d("TournamentDetailsFragme", "${tournamentViewModel.tournament.toString()}")
 
         usersViewModel.users.observe(viewLifecycleOwner) {
             usersSet = it
@@ -58,7 +55,7 @@ class TournamentDetailsFragment : Fragment() {
         tournamentViewModel.getTournamentWinnerUid()?.observe(viewLifecycleOwner) { users ->
             users?.let {
                 val winners = users.map { it?.name }.joinToString()
-                nextMatchText.text = "Koniec turnieju.\n Zwyciestwo: $winners"
+                nextMatchText.text = "Koniec turnieju.\nZwyciestwo: $winners"
                 player1.visibility = View.GONE
                 player2.visibility = View.GONE
                 playButton.visibility = View.GONE
@@ -96,7 +93,6 @@ class TournamentDetailsFragment : Fragment() {
             imm?.hideSoftInputFromWindow(view.windowToken, 0)
             handleButtonClick()
         }
-
     }
 
     private fun handleButtonClick() {

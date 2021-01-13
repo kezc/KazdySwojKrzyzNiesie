@@ -2,7 +2,6 @@ package com.example.kolkoikrzyzyk
 
 import android.content.res.Resources
 import android.util.TypedValue
-import androidx.lifecycle.MutableLiveData
 
 fun Float.dpToPixels(resources: Resources): Float {
     return TypedValue.applyDimension(
@@ -10,11 +9,6 @@ fun Float.dpToPixels(resources: Resources): Float {
         this,
         resources.displayMetrics
     )
-}
-
-
-fun <T> MutableLiveData<T>.notifyObserver() {
-    this.value = this.value
 }
 
 open class Event<out T>(private val content: T) {

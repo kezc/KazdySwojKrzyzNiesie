@@ -11,7 +11,6 @@ class RankingViewAdapter : RecyclerView.Adapter<RankingViewAdapter.ViewHolder>()
     private var values: List<User> = listOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-
         return ViewHolder(
             LayoutInflater.from(parent.context).inflate(
                 R.layout.ranking_card,

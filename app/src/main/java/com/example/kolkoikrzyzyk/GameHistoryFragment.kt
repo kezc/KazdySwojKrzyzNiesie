@@ -23,10 +23,11 @@ class GameHistoryFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
         val adapter = GamesHistoryViewAdapter()
         historyList.adapter = adapter
         historyList.layoutManager = LinearLayoutManager(requireContext())
-        super.onViewCreated(view, savedInstanceState)
         lifecycleScope.launch {
             val lines = withContext(Dispatchers.IO) {
                 try {

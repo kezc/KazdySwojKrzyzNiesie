@@ -54,7 +54,9 @@
         tools:layout="@layout/fragment_login" >
         <action
             android:id="@+id/action_loginFragment_to_mainFragment"
-            app:destination="@id/mainFragment" />
+            app:destination="@id/mainFragment"
+            app:popUpTo="@id/loginFragment"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_loginFragment_to_registerFragment"
             app:destination="@id/registerFragment" />
@@ -84,7 +86,7 @@
         <action
             android:id="@+id/action_mainFragment_to_loginFragment_without_stack"
             app:destination="@id/loginFragment"
-            app:popUpTo="@id/mainFragment"
+            app:popUpTo="@id/loginFragment"
             app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_mainFragment_to_tournamentSettingsFragment"

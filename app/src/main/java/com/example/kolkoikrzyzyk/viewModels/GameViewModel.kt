@@ -21,7 +21,6 @@ import kotlin.concurrent.thread
 class GameViewModel(application: Application) : AndroidViewModel(application) {
     private val TAG = "GameViewModel"
     private val repository = UserRepository(AppDatabase.getInstance(application).userDao())
-    private var isGameWithComputer = false
     lateinit var noughtUser: User
     lateinit var crossUser: User
     var size = 3
@@ -43,17 +42,17 @@ class GameViewModel(application: Application) : AndroidViewModel(application) {
     fun startGame() {
         game = Game(size, is3D)
         _currentPlayer.value = game.currentPlayer
-        if (noughtUser.name == "Computer") {
+        if (noughtUser.name == "Komputer") {
             computer = ComputerPlayer(game, PlayerType.Nought)
         }
-        if (crossUser.name == "Computer") {
+        if (crossUser.name == "Komputer") {
             computer = ComputerPlayer(game, PlayerType.Cross)
             computerMove()
         }
     }
 
     fun makeMove(x: Int, y: Int, z: Int) {
-        if (isComputerThinking == true) {
+        if (isComputerThinking) {
             return
         }
         if (game.makeMove(x, y, z)) {
@@ -67,7 +66,7 @@ class GameViewModel(application: Application) : AndroidViewModel(application) {
         } else {
             _currentPlayer.value = game.currentPlayer
         }
-        if (crossUser.name == "Computer" || noughtUser.name == "Computer") {
+        if (crossUser.name == "Komputer" || noughtUser.name == "Komputer") {
             computerMove()
         }
     }
@@ -122,31 +121,31 @@ class GameViewModel(application: Application) : AndroidViewModel(application) {
                 saveResult(gameResult)
                 if (gameResult is GameResult.Over) {
                     if (gameResult.winner == PlayerType.Cross) {
-                        if (crossUser.name != "Computer") {
+                        if (crossUser.name != "Komputer") {
                             crossUser.wonGames++
                             repository.updateUser(crossUser)
                         }
-                        if (noughtUser.name != "Computer") {
+                        if (noughtUser.name != "Komputer") {
                             noughtUser.lostGames++
                             repository.updateUser(noughtUser)
                         }
                     } else {
-                        if (crossUser.name != "Computer") {
+                        if (crossUser.name != "Komputer") {
                             crossUser.lostGames++
                             repository.updateUser(crossUser)
                         }
-                        if (noughtUser.name != "Computer") {
+                        if (noughtUser.name != "Komputer") {
                             noughtUser.wonGames++
                             repository.updateUser(noughtUser)
                         }
                     }
                 }
                 if (gameResult is GameResult.Draw) {
-                    if (crossUser.name != "Computer") {
+                    if (crossUser.name != "Komputer") {
                         crossUser.drawnGames++
                         repository.updateUser(crossUser)
                     }
-                    if (noughtUser.name != "Computer") {
+                    if (noughtUser.name != "Komputer") {
                         noughtUser.drawnGames++
                         repository.updateUser(noughtUser)
                     }
@@ -159,10 +158,10 @@ class GameViewModel(application: Application) : AndroidViewModel(application) {
             val file = File(getApplication<Application>().filesDir, "results.txt")
             val result = when (gameResult) {
                 is GameResult.Over -> {
-                    if (gameResult.winner == PlayerType.Cross) crossUser.name + " won"
-                    else noughtUser.name + " won"
+                    if (gameResult.winner == PlayerType.Cross) crossUser.name + " wygrał"
+                    else noughtUser.name + " wygrał"
                 }
-                GameResult.Draw -> "draw"
+                GameResult.Draw -> "Remis"
                 GameResult.Pending -> ""
             }
             file.appendText("${noughtUser.name},${crossUser.name},$result\n")

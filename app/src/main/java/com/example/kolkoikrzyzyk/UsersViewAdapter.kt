@@ -43,5 +43,4 @@ class UsersViewAdapter(val logoutCallback: (User)-> Unit) : RecyclerView.Adapter
             }
         }
     }
-
 }

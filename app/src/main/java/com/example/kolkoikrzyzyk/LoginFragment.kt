@@ -57,8 +57,6 @@ class LoginFragment : Fragment() {
                 if (it) {
                     nameEditText.setText("")
                     passwordEditText.setText("")
-
-
                     view.findNavController().navigate(
                         LoginFragmentDirections.actionLoginFragmentToMainFragment()
                     )

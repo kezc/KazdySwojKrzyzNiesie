@@ -39,11 +39,6 @@ class Game2DFragment : BaseGameFragment() {
         })
 
         endGameButton.setOnClickListener {
-//            if (isTournament) {
-//                findNavController().navigate(Game2DFragmentDirections.actionGame2DFragmentToTournamentDetailsFragment())
-//            } else {
-//                findNavController().navigate(Game2DFragmentDirections.actionGame2DFragmentToMainFragment())
-//            }
             findNavController().popBackStack()
         }
 
@@ -65,7 +60,6 @@ class Game2DFragment : BaseGameFragment() {
         buttons.forEach { it.forEach { button -> button.isClickable = false } }
     }
 
-
     private fun createBoard(size: Int) {
         val buttonSize = (if (size == 4) 84f else 96f).dpToPixels(resources).roundToInt()
 
@@ -85,6 +79,4 @@ class Game2DFragment : BaseGameFragment() {
         gameContainer.addView(column)
         buttons = tempButtons
     }
-
-
 }
